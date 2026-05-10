@@ -211,6 +211,8 @@ textarea::placeholder{color:var(--mu)}
 <div id="toast" class="toast hidden"></div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
 // ── DATA ─────────────────────────────────────────────────────────────────
 var SPECIAL_SECTIONS = [
   {code:"FWC",name:"Einleitung & WM-History",group:"Spezial",stickers:[
@@ -685,6 +687,8 @@ document.getElementById(‘stk-popup’).addEventListener(‘click’, function(
 if(e.target===this) closePopup();
 });
 
+});
 </script>
+
 </body>
 </html>
