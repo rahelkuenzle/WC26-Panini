@@ -10,6 +10,7 @@
 <title>⚽ Panini WM 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>html,body{margin:0;padding:0;background:#0f0e17;min-height:100vh}#root{min-height:100vh}</style>
@@ -17,1658 +18,594 @@
 <body>
 <div id="root"></div>
 <script>
-var useState = React.useState;
-var useEffect = React.useEffect;
-var useRef = React.useRef;
+// Suppress Babel production warning
+window.__BABEL_SUPPRESSED__ = true;
+var _warn = console.warn;
+console.warn = function(msg) { if (msg && msg.includes && msg.includes('Babel')) return; _warn.apply(console, arguments); };
+</script>
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
 
-“use strict”;
+const SPECIAL_SECTIONS = [
+{ code:“FWC”, name:“Einleitung & WM-History ⭐”, group:“Spezial”, stickers:[
+{id:“00”,   name:“Panini Logo”,         foil:true},
+{id:“FWC1”, name:“Official Emblem”,     foil:true},
+{id:“FWC2”, name:“Official Emblem 2”,   foil:true},
+{id:“FWC3”, name:“Official Mascots”,    foil:true},
+{id:“FWC4”, name:“Official Slogan”,     foil:true},
+{id:“FWC5”, name:“Official Ball”,       foil:true},
+{id:“FWC6”, name:“Kanada – Host Cities”,foil:true},
+{id:“FWC7”, name:“Mexiko – Host Cities”,foil:true},
+{id:“FWC8”, name:“USA – Host Cities”,   foil:true},
+{id:“FWC9”, name:“Italien 1934”,        foil:true},
+{id:“FWC10”,name:“Uruguay 1950”,        foil:true},
+{id:“FWC11”,name:“W.-Deutschland 1954”, foil:true},
+{id:“FWC12”,name:“Brasilien 1962”,      foil:true},
+{id:“FWC13”,name:“W.-Deutschland 1974”, foil:true},
+{id:“FWC14”,name:“Argentinien 1986”,    foil:true},
+{id:“FWC15”,name:“Brasilien 1994”,      foil:true},
+{id:“FWC16”,name:“Brasilien 2002”,      foil:true},
+{id:“FWC17”,name:“Italien 2006”,        foil:true},
+{id:“FWC18”,name:“Deutschland 2014”,    foil:true},
+{id:“FWC19”,name:“Argentinien 2022”,    foil:true},
+]},
+{ code:“CCL”, name:“Coca-Cola Sticker 🥤”, group:“Spezial”, stickers:[
+{id:“CCL1”, name:“Coca-Cola #1”, foil:false},
+{id:“CCL2”, name:“Coca-Cola #2”, foil:false},
+{id:“CCL3”, name:“Coca-Cola #3”, foil:false},
+{id:“CCL4”, name:“Coca-Cola #4”, foil:false},
+{id:“CCL5”, name:“Coca-Cola #5”, foil:false},
+{id:“CCL6”, name:“Coca-Cola #6”, foil:false},
+{id:“CCL7”, name:“Coca-Cola #7”, foil:false},
+{id:“CCL8”, name:“Coca-Cola #8”, foil:false},
+{id:“CCL9”, name:“Coca-Cola #9”, foil:false},
+{id:“CCL10”,name:“Coca-Cola #10”,foil:false},
+{id:“CCL11”,name:“Coca-Cola #11”,foil:false},
+{id:“CCL12”,name:“Coca-Cola #12”,foil:false},
+]},
+];
 
-function _typeof(o) { “@babel/helpers - typeof”; return _typeof = “function” == typeof Symbol && “symbol” == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && “function” == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? “symbol” : typeof o; }, _typeof(o); }
-function _regenerator() { /*! regenerator-runtime – Copyright (c) 2014-present, Facebook, Inc. – license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = “function” == typeof Symbol ? Symbol : {}, n = r.iterator || “@@iterator”, o = r.toStringTag || “@@toStringTag”; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, “_invoke”, function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError(“Generator is already running”); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = “next”), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError(“iterator result is not an object”); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i[“return”]) && t.call(i), c < 2 && (u = TypeError(“The iterator does not provide a ‘” + o + “’ method”), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.**proto** = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, “GeneratorFunction”)), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, “constructor”, GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, “constructor”, GeneratorFunction), GeneratorFunction.displayName = “GeneratorFunction”, _regeneratorDefine2(GeneratorFunctionPrototype, o, “GeneratorFunction”), _regeneratorDefine2(u), _regeneratorDefine2(u, o, “Generator”), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, “toString”, function () { return “[object Generator]”; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, “”, {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o(“next”, 0), o(“throw”, 1), o(“return”, 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, “next”, n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, “throw”, n); } _next(void 0); }); }; }
-function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError(“Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.”); }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : “undefined” != typeof Symbol && r[Symbol.iterator] || r[”@@iterator”]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t[“return”] && (u = t[“return”](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError(“Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.”); }
-function _unsupportedIterableToArray(r, a) { if (r) { if (“string” == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return “Object” === t && r.constructor && (t = r.constructor.name), “Map” === t || “Set” === t ? Array.from(r) : “Arguments” === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _iterableToArray(r) { if (“undefined” != typeof Symbol && null != r[Symbol.iterator] || null != r[”@@iterator”]) return Array.from(r); }
-function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, “string”); return “symbol” == _typeof(i) ? i : i + “”; }
-function _toPrimitive(t, r) { if (“object” != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || “default”); if (“object” != _typeof(i)) return i; throw new TypeError(”@@toPrimitive must return a primitive value.”); } return (“string” === r ? String : Number)(t); }
-var SPECIAL_SECTIONS = [{
-code: “FWC”,
-name: “Einleitung & WM-History ⭐”,
-group: “Spezial”,
-stickers: [{
-id: “00”,
-name: “Panini Logo”,
-foil: true
-}, {
-id: “FWC1”,
-name: “Official Emblem”,
-foil: true
-}, {
-id: “FWC2”,
-name: “Official Emblem 2”,
-foil: true
-}, {
-id: “FWC3”,
-name: “Official Mascots”,
-foil: true
-}, {
-id: “FWC4”,
-name: “Official Slogan”,
-foil: true
-}, {
-id: “FWC5”,
-name: “Official Ball”,
-foil: true
-}, {
-id: “FWC6”,
-name: “Kanada – Host Cities”,
-foil: true
-}, {
-id: “FWC7”,
-name: “Mexiko – Host Cities”,
-foil: true
-}, {
-id: “FWC8”,
-name: “USA – Host Cities”,
-foil: true
-}, {
-id: “FWC9”,
-name: “Italien 1934”,
-foil: true
-}, {
-id: “FWC10”,
-name: “Uruguay 1950”,
-foil: true
-}, {
-id: “FWC11”,
-name: “W.-Deutschland 1954”,
-foil: true
-}, {
-id: “FWC12”,
-name: “Brasilien 1962”,
-foil: true
-}, {
-id: “FWC13”,
-name: “W.-Deutschland 1974”,
-foil: true
-}, {
-id: “FWC14”,
-name: “Argentinien 1986”,
-foil: true
-}, {
-id: “FWC15”,
-name: “Brasilien 1994”,
-foil: true
-}, {
-id: “FWC16”,
-name: “Brasilien 2002”,
-foil: true
-}, {
-id: “FWC17”,
-name: “Italien 2006”,
-foil: true
-}, {
-id: “FWC18”,
-name: “Deutschland 2014”,
-foil: true
-}, {
-id: “FWC19”,
-name: “Argentinien 2022”,
-foil: true
-}]
-}, {
-code: “CCL”,
-name: “Coca-Cola Sticker 🥤”,
-group: “Spezial”,
-stickers: [{
-id: “CCL1”,
-name: “Coca-Cola #1”,
-foil: false
-}, {
-id: “CCL2”,
-name: “Coca-Cola #2”,
-foil: false
-}, {
-id: “CCL3”,
-name: “Coca-Cola #3”,
-foil: false
-}, {
-id: “CCL4”,
-name: “Coca-Cola #4”,
-foil: false
-}, {
-id: “CCL5”,
-name: “Coca-Cola #5”,
-foil: false
-}, {
-id: “CCL6”,
-name: “Coca-Cola #6”,
-foil: false
-}, {
-id: “CCL7”,
-name: “Coca-Cola #7”,
-foil: false
-}, {
-id: “CCL8”,
-name: “Coca-Cola #8”,
-foil: false
-}, {
-id: “CCL9”,
-name: “Coca-Cola #9”,
-foil: false
-}, {
-id: “CCL10”,
-name: “Coca-Cola #10”,
-foil: false
-}, {
-id: “CCL11”,
-name: “Coca-Cola #11”,
-foil: false
-}, {
-id: “CCL12”,
-name: “Coca-Cola #12”,
-foil: false
-}]
-}];
-var TEAMS = [{
-code: “MEX”,
-name: “Mexiko 🇲🇽”,
-group: “A”,
-players: [“Team Logo”, “Luis Malagón”, “Johan Vasquez”, “Jorge Sánchez”, “Cesar Montes”, “Jesus Gallardo”, “Israel Reyes”, “Diego Lainez”, “Carlos Rodriguez”, “Edson Alvarez”, “Orbelin Pineda”, “Marcel Ruiz”, “Team Photo”, “Érick Sánchez”, “Hirving Lozano”, “Santiago Giménez”, “Raúl Jiménez”, “Alexis Vega”, “Roberto Alvarado”, “Cesar Huerta”]
-}, {
-code: “RSA”,
-name: “Südafrika 🇿🇦”,
-group: “A”,
-players: [“Team Logo”, “Ronwen Williams”, “Sipho Chaine”, “Aubrey Modiba”, “Samukele Kabini”, “Mbekezeli Mbokazi”, “Khulumani Ndamane”, “Siyabonga Ngezana”, “Khuliso Mudau”, “Nkosinathi Sibisi”, “Teboho Mokoena”, “Thalente Mbatha”, “Team Photo”, “Bathasi Aubaas”, “Yaya Sithole”, “Sipho Mbule”, “Lyle Foster”, “Iqraam Rayners”, “Mohau Nkota”, “Oswin Appollis”]
-}, {
-code: “KOR”,
-name: “Südkorea 🇰🇷”,
-group: “A”,
-players: [“Team Logo”, “Hyeon-woo Jo”, “Seung-Gyu Kim”, “Min-jae Kim”, “Yu-min Cho”, “Young-woo Seol”, “Han-beom Lee”, “Tae-seok Lee”, “Myung-jae Lee”, “Jae-sung Lee”, “In-beom Hwang”, “Kang-in Lee”, “Team Photo”, “Seung-ho Paik”, “Jens Castrop”, “Dongg-yeong Lee”, “Gue-sung Cho”, “Heung-min Son”, “Hee-chan Hwang”, “Hyeon-Gyu Oh”]
-}, {
-code: “CZE”,
-name: “Tschechien 🇨🇿”,
-group: “A”,
-players: [“Team Logo”, “Matej Kovar”, “Jindrich Stanek”, “Ladislav Krejci”, “Vladimir Coufal”, “Jaroslav Zeleny”, “Tomas Holes”, “David Zima”, “Michal Sadilek”, “Lukas Provod”, “Lukas Cerv”, “Tomas Soucek”, “Team Photo”, “Pavel Sulc”, “Matej Vydra”, “Vasil Kusej”, “Tomas Chory”, “Vaclav Cerny”, “Adam Hlozek”, “Patrik Schick”]
-}, {
-code: “CAN”,
-name: “Kanada 🇨🇦”,
-group: “B”,
-players: [“Team Logo”, “Dayne St.Clair”, “Alphonso Davies”, “Alistair Johnston”, “Samuel Adekugbe”, “Riche Larvea”, “Derek Cornelius”, “Moïse Bombito”, “Kamal Miller”, “Stephen Eustáquio”, “Ismaël Koné”, “Jonathan Osorio”, “Team Photo”, “Jacob Shaffelburg”, “Mathieu Choinière”, “Niko Sigur”, “Tajon Buchanan”, “Liam Millar”, “Cyle Larin”, “Jonathan David”]
-}, {
-code: “BIH”,
-name: “Bosnien 🇧🇦”,
-group: “B”,
-players: [“Team Logo”, “Nikola Vasilj”, “Amer Dedic”, “Sead Kolasinac”, “Tarik Muharemovic”, “Nihad Mujakic”, “Nikola Katic”, “Amir Hadziahmetovic”, “Benjamin Tahirovic”, “Armin Gigovic”, “Ivan Sunjic”, “Ivan Basic”, “Team Photo”, “Dzenis Burnic”, “Esmir Bajraktarevic”, “Amar Memic”, “Ermedin Demirovic”, “Edin Dzeko”, “Samed Bazdar”, “Haris Tabakovic”]
-}, {
-code: “QAT”,
-name: “Katar 🇶🇦”,
-group: “B”,
-players: [“Team Logo”, “Meshaal Barsham”, “Sultan Albrake”, “Lucas Mendes”, “Homam Ahmed”, “Boualem Khoukhi”, “Pedro Miguel”, “Tarek Salman”, “Mohamed Al-Mannai”, “Karim Boudiaf”, “Assim Madibo”, “Ahmed Fatehi”, “Team Photo”, “Mohammed Waad”, “Abdulaziz Hatem”, “Hassan Al-Haydos”, “Edmilson Junior”, “Akram Hassan Afif”, “Ahmed Al Ganehi”, “Almoez Ali”]
-}, {
-code: “SUI”,
-name: “Schweiz 🇨🇭”,
-group: “B”,
-players: [“Team Logo”, “Gregor Kobel”, “Yvon Mvogo”, “Manuel Akanji”, “Ricardo Rodriguez”, “Nico Elvedi”, “Aurèle Amenda”, “Silvan Widmer”, “Granit Xhaka”, “Denis Zakaria”, “Remo Freuler”, “Fabian Rieder”, “Team Photo”, “Ardon Jashari”, “Johan Manzambi”, “Michel Aebischer”, “Breel Embolo”, “Ruben Vargas”, “Dan Ndoye”, “Zeki Amdouni”]
-}, {
-code: “BRA”,
-name: “Brasilien 🇧🇷”,
-group: “C”,
-players: [“Team Logo”, “Alisson”, “Bento”, “Marquinhos”, “Éder Militão”, “Gabriel Magalhães”, “Danilo”, “Wesley”, “Lucas Paquetá”, “Casemiro”, “Bruno Guimarães”, “Luiz Henrique”, “Team Photo”, “Vinicius Júnior”, “Rodrygo”, “João Pedro”, “Matheus Cunha”, “Gabriel Martinelli”, “Raphinha”, “Estévão”]
-}, {
-code: “MAR”,
-name: “Marokko 🇲🇦”,
-group: “C”,
-players: [“Team Logo”, “Yassine Bounou”, “Munir El Kajoui”, “Achraf Hakimi”, “Noussair Mazraoui”, “Nayef Aguerd”, “Roman Saiss”, “Jawad El Yamio”, “Adam Masina”, “Sofyan Amrabat”, “Azzedine Ounahi”, “Eliesse Ben Seghir”, “Team Photo”, “Bilal El Khannouss”, “Ismael Saibari”, “Youssef En-Nesyri”, “Abde Ezzalzouli”, “Soufiane Rahimi”, “Brahim Diaz”, “Ayoub El Kaabi”]
-}, {
-code: “HAI”,
-name: “Haiti 🇭🇹”,
-group: “C”,
-players: [“Team Logo”, “Johny Placide”, “Carlens Arcus”, “Martin Expérience”, “Jean-Kevin Duverne”, “Ricardo Adé”, “Duke Lacroix”, “Garven Metusala”, “Hannes Delcroix”, “Leverton Pierre”, “Danley Jean Jacques”, “Jean-Ricner Bellegarde”, “Team Photo”, “Christopher Attys”, “Derrick Etienne Jr”, “Josue Casimir”, “Ruben Providence”, “Duckens Nazon”, “Louicius Deedson”, “Frantzdy Pierrot”]
-}, {
-code: “SCO”,
-name: “Schottland 🏴󠁧󠁢󠁳󠁣󠁴󠁿”,
-group: “C”,
-players: [“Team Logo”, “Angus Gunn”, “Jack Hendry”, “Kieran Tierney”, “Aaron Hickey”, “Andrew Robertson”, “Scott McKenna”, “John Souttar”, “Anthony Ralston”, “Grant Hanley”, “Scott McTominay”, “Billy Gilmour”, “Team Photo”, “Lewis Ferguson”, “Ryan Christie”, “Kenny McLean”, “John McGinn”, “Lyndon Dykes”, “Che Adams”, “Ben Gannon-Doak”]
-}, {
-code: “USA”,
-name: “USA 🇺🇸”,
-group: “D”,
-players: [“Team Logo”, “Matt Freese”, “Chris Richards”, “Tim Ream”, “Mark McKenzie”, “Alex Freeman”, “Antonee Robinson”, “Tyler Adams”, “Tanner Tessmann”, “Weston McKenny”, “Christian Roldan”, “Timothy Weah”, “Team Photo”, “Diego Luna”, “Malik Tillman”, “Christian Pulisic”, “Brenden Aaronson”, “Ricardo Pepi”, “Haji Wright”, “Folarin Balogun”]
-}, {
-code: “PAR”,
-name: “Paraguay 🇵🇾”,
-group: “D”,
-players: [“Team Logo”, “Roberto Fernandez”, “Orlando Gill”, “Gustavo Gomez”, “Fabián Balbuena”, “Juan José Cáceres”, “Omar Alderete”, “Junior Alonso”, “Mathías Villasanti”, “Diego Gomez”, “Damián Bobadilla”, “Andres Cubas”, “Team Photo”, “Matias Galarza Fonda”, “Julio Enciso”, “Alejandro Romero Gamarra”, “Miguel Almirón”, “Ramon Sosa”, “Angel Romero”, “Antonio Sanabria”]
-}, {
-code: “AUS”,
-name: “Australien 🇦🇺”,
-group: “D”,
-players: [“Team Logo”, “Mathew Ryan”, “Joe Gauci”, “Harry Souttar”, “Alessandro Circati”, “Jordan Bos”, “Aziz Behich”, “Cameron Burgess”, “Lewis Miller”, “Milos Degenek”, “Jackson Irvine”, “Riley McGree”, “Team Photo”, “Aiden O’Neill”, “Connor Metcalfe”, “Patrick Yazbek”, “Craig Goodwin”, “Kusini Vengi”, “Nestory Irankunda”, “Mohamed Touré”]
-}, {
-code: “TUR”,
-name: “Türkei 🇹🇷”,
-group: “D”,
-players: [“Team Logo”, “Ugurcan Cakir”, “Mert Muldur”, “Zeki Celik”, “Abdulkerim Bardakci”, “Caglar Soyuncu”, “Merih Demiral”, “Ferdi Kadioglu”, “Kaan Ayhan”, “Ismail Yuksek”, “Hakan Calhanoglu”, “Orkun Kokcu”, “Team Photo”, “Arda Guler”, “Irfan Can Kahveci”, “Yunus Akgun”, “Can Uzun”, “Baris Alper Yilmaz”, “Kerem Akturkoglu”, “Kenan Yildiz”]
-}, {
-code: “GER”,
-name: “Deutschland 🇩🇪”,
-group: “D”,
-players: [“Team Logo”, “Marc-André ter Stegen”, “Jonathan Tah”, “David Raum”, “Nico Schlotterbeck”, “Antonio Rüdiger”, “Waldemar Anton”, “Ridle Baku”, “Maximilian Mittelstadt”, “Joshua Kimmich”, “Florian Wirtz”, “Felix Nmecha”, “Team Photo”, “Leon Goretzka”, “Jamal Musiala”, “Serge Gnabry”, “Kai Havertz”, “Leroy Sane”, “Karim Adeyemi”, “Nick Woltemade”]
-}, {
-code: “CUW”,
-name: “Curaçao 🇨🇼”,
-group: “E”,
-players: [“Team Logo”, “Eloy Room”, “Armando Obispo”, “Sherel Floranus”, “Jurien Gaari”, “Joshua Brenet”, “Roshon Van Eijma”, “Shurandy Sambo”, “Livano Comenencia”, “Godfried Roemeratoe”, “Juninho Bacuna”, “Leandro Bacuna”, “Team Photo”, “Tahith Chong”, “Kenji Gorre”, “Jearl Margaritha”, “Jurgen Locadia”, “Jeremy Antonisse”, “Gervane Kastaneer”, “Sontje Hansen”]
-}, {
-code: “IVC”,
-name: “Elfenbeinküste 🇨🇮”,
-group: “E”,
-players: [“Team Logo”, “Yahia Fofana”, “Ghislain Konan”, “Wilfried Singo”, “Odilon Kossounou”, “Evan Ndicka”, “Willy Boly”, “Emmanuel Agbadou”, “Ousmane Diomande”, “Franck Kessie”, “Seko Fofana”, “Ibrahim Sangare”, “Team Photo”, “Jean-Philippe Gbamin”, “Amad Diallo”, “Sébastien Haller”, “Simon Adingra”, “Yan Diomande”, “Evann Guessand”, “Oumar Diakite”]
-}, {
-code: “ECU”,
-name: “Ecuador 🇪🇨”,
-group: “E”,
-players: [“Team Logo”, “Hernán Galíndez”, “Gonzalo Valle”, “Piero Hincapié”, “Pervis Estupiñán”, “Willian Pacho”, “Ángelo Preciado”, “Joel Ordóñez”, “Moises Caicedo”, “Alan Franco”, “Kendry Paez”, “Pedro Vite”, “Team Photo”, “John Yeboah”, “Leonardo Campana”, “Gonzalo Plata”, “Nilson Angulo”, “Alan Minda”, “Kevin Rodriguez”, “Enner Valencia”]
-}, {
-code: “NED”,
-name: “Niederlande 🇳🇱”,
-group: “E”,
-players: [“Team Logo”, “Bart Verbruggen”, “Virgil van Dijk”, “Micky van de Ven”, “Jurriën Timber”, “Denzel Dumfries”, “Nathan Aké”, “Jeremie Frimpong”, “Jan Paul van Hecke”, “Tijjani Reijnders”, “Ryan Gravenberch”, “Teun Koopmeiners”, “Team Photo”, “Frenkie de Jong”, “Xavi Simons”, “Justin Kluivert”, “Memphis Depay”, “Donyell Malen”, “Wout Weghorst”, “Cody Gakpo”]
-}, {
-code: “JPN”,
-name: “Japan 🇯🇵”,
-group: “F”,
-players: [“Team Logo”, “Zion Suzuki”, “Henry Heroki Mochizuki”, “Ayumu Seko”, “Junnosuke Suzuki”, “Shogo Taniguchi”, “Tsuyoshi Watanabe”, “Kaishu Sano”, “Yuki Soma”, “Ao Tanaka”, “Daichi Kamada”, “Takefusa Kubo”, “Team Photo”, “Ritsu Doan”, “Keito Nakamura”, “Takumi Minamino”, “Shuto Machino”, “Junya Ito”, “Koki Ogawa”, “Ayase Ueda”]
-}, {
-code: “SWE”,
-name: “Schweden 🇸🇪”,
-group: “F”,
-players: [“Team Logo”, “Victor Johansson”, “Isak Hien”, “Gabriel Gudmundsson”, “Emil Holm”, “Victor Nilsson Lindelöf”, “Gustaf Lagerbielke”, “Lucas Bergvall”, “Hugo Larsson”, “Jesper Karlström”, “Yasin Ayari”, “Mattias Svanberg”, “Team Photo”, “Daniel Svensson”, “Ken Sema”, “Roony Bardghji”, “Dejan Kulusevski”, “Anthony Elanga”, “Alexander Isak”, “Viktor Gyökeres”]
-}, {
-code: “TUN”,
-name: “Tunesien 🇹🇳”,
-group: “F”,
-players: [“Team Logo”, “Bechir Ben Said”, “Aymen Dahmen”, “Yan Valery”, “Montassar Talbi”, “Yassine Meriah”, “Ali Abdi”, “Dylan Bronn”, “Ellyes Skhiri”, “Aissa Laidouni”, “Ferjani Sassi”, “Mohamed Ali Ben Romdhane”, “Team Photo”, “Hannibal Mejbri”, “Elias Achouri”, “Elias Saad”, “Hazem Mastouri”, “Ismael Gharbi”, “Sayfallah Ltaief”, “Naim Sliti”]
-}, {
-code: “BEL”,
-name: “Belgien 🇧🇪”,
-group: “F”,
-players: [“Team Logo”, “Thibaut Courtois”, “Arthur Theate”, “Timothy Castagne”, “Zeno Debast”, “Brandon Mechele”, “Maxim De Cuyper”, “Thomas Meunier”, “Youri Tielemans”, “Amadou Onana”, “Nicolas Raskin”, “Alexis Saelemaekers”, “Team Photo”, “Hans Vanaken”, “Kevin De Bruyne”, “Jérémy Doku”, “Charles De Ketelaere”, “Leandro Trossard”, “Loïs Openda”, “Romelu Lukaku”]
-}, {
-code: “EGY”,
-name: “Ägypten 🇪🇬”,
-group: “G”,
-players: [“Team Logo”, “Mohamed El Shenawy”, “Mohamed Hany”, “Mohamed Hamdy”, “Yasser Ibrahim”, “Khaled Sobhi”, “Ramy Rabia”, “Hossam Abdelmaguid”, “Ahmed Fatouh”, “Marwan Attia”, “Zizo”, “Hamdy Fathy”, “Team Photo”, “Mohamed Lasheen”, “Emam Ashour”, “Osama Faisal”, “Mohamed Salah”, “Mostafa Mohamed”, “Trezeguet”, “Omar Marmoush”]
-}, {
-code: “IRN”,
-name: “Iran 🇮🇷”,
-group: “G”,
-players: [“Team Logo”, “Alireza Beiranvand”, “Morteza Pouraliganji”, “Ehsan Hajsafi”, “Milad Mohammadi”, “Shojae Khalilzadeh”, “Ramin Rezaeian”, “Hossein Kanaani”, “Sadegh Moharrami”, “Saleh Hardani”, “Saeed Ezatolahi”, “Saman Ghoddos”, “Team Photo”, “Omid Noorafkan”, “Roozbeh Cheshmi”, “Mohammad Mohebi”, “Sardar Azmoun”, “Mehdi Taremi”, “Alireza Jahanbakhsh”, “Ali Gholizadeh”]
-}, {
-code: “NZL”,
-name: “Neuseeland 🇳🇿”,
-group: “G”,
-players: [“Team Logo”, “Max Crocombe Payne”, “Alex Paulsen”, “Michael Boxall”, “Liberato Cacace”, “Tim Payne”, “Tyler Bindon”, “Francis de Vries”, “Finn Surman”, “Joe Bell”, “Sarpreet Singh”, “Ryan Thomas”, “Team Photo”, “Matthew Garbett”, “Marko Stamenić”, “Ben Old”, “Chris Wood”, “Elijah Just”, “Callum McCowatt”, “Kosta Barbarouses”]
-}, {
-code: “ESP”,
-name: “Spanien 🇪🇸”,
-group: “G”,
-players: [“Team Logo”, “Unai Simon”, “Robin Le Normand”, “Aymeric Laporte”, “Dean Huijsen”, “Pedro Porro”, “Dani Carvajal”, “Marc Cucurella”, “Martín Zubimendi”, “Rodri”, “Pedri”, “Fabian Ruiz”, “Team Photo”, “Mikel Merino”, “Lamine Yamal”, “Dani Olmo”, “Nico Williams”, “Ferran Torres”, “Álvaro Morata”, “Mikel Oyarzabal”]
-}, {
-code: “CPV”,
-name: “Kap Verde 🇨🇻”,
-group: “H”,
-players: [“Team Logo”, “Vozinha”, “Logan Costa”, “Pico”, “Diney”, “Steven Moreira”, “Wagner Pina”, “Joao Paulo”, “Yannick Semedo”, “Kevin Pina”, “Patrick Andrade”, “Jamiro Monteiro”, “Team Photo”, “Deroy Duarte”, “Garry Rodrigues”, “Jovane Cabral”, “Ryan Mendes”, “Dailon Livramento”, “Willy Semedo”, “Bebe”]
-}, {
-code: “KSA”,
-name: “Saudi-Arabien 🇸🇦”,
-group: “H”,
-players: [“Team Logo”, “Nawaf Alaqidi”, “Abdulrahman Al-Sanbi”, “Saud Abdulhamid”, “Nawaf Bouwashl”, “Jihad Thakri”, “Moteb Al-Harbi”, “Hassan Altambakti”, “Musab Aljuwayr”, “Ziyad Aljohani”, “Abdullah Alkhaibari”, “Nasser Aldawsari”, “Team Photo”, “Saleh Abu Alshamat”, “Marwan Alsahafi”, “Salem Aldawsari”, “Abdulrahman Al-Aboud”, “Feras Akbrikan”, “Saleh Alshehri”, “Abdullah Al-Hamdan”]
-}, {
-code: “URU”,
-name: “Uruguay 🇺🇾”,
-group: “H”,
-players: [“Team Logo”, “Sergio Rochet”, “Santiago Mele”, “Ronald Araujo”, “José María Giménez”, “Sebastian Caceres”, “Mathias Olivera”, “Guillermo Varela”, “Nahitan Nandez”, “Federico Valverde”, “Giorgian De Arrascaeta”, “Rodrigo Bentancur”, “Team Photo”, “Manuel Ugarte”, “Nicolás de la Cruz”, “Maxi Araujo”, “Darwin Núñez”, “Federico Viñas”, “Rodrigo Aguirre”, “Facundo Pellistri”]
-}, {
-code: “FRA”,
-name: “Frankreich 🇫🇷”,
-group: “I”,
-players: [“Team Logo”, “Mike Maignan”, “Theo Hernandez”, “William Saliba”, “Jules Kounde”, “Ibrahima Konate”, “Dayot Upamecano”, “Lucas Digne”, “Aurélien Tchouaméni”, “Eduardo Camavinga”, “Manu Kone”, “Adrien Rabiot”, “Team Photo”, “Michael Olise”, “Ousmane Dembele”, “Bradley Barcola”, “Désiré Doué”, “Kingsley Coman”, “Hugo Ekitike”, “Kylian Mbappe”]
-}, {
-code: “SEN”,
-name: “Senegal 🇸🇳”,
-group: “I”,
-players: [“Team Logo”, “Edouard Mendy”, “Yehvann Diouf”, “Moussa Niakhaté”, “Abdoulaye Seck”, “Ismail Jakobs”, “El Hadji Malick Diouf”, “Kalidou Koulibaly”, “Idrissa Gana Gueye”, “Pape Matar Sarr”, “Pape Gueye”, “Habib Diarra”, “Team Photo”, “Lamine Camara”, “Sadio Mane”, “Ismaïla Sarr”, “Boulaye Dia”, “Iliman Ndiaye”, “Nicolas Jackson”, “Krepin Diatta”]
-}, {
-code: “IRQ”,
-name: “Irak 🇮🇶”,
-group: “I”,
-players: [“Team Logo”, “Jalal Hassan”, “Rebin Sulaka”, “Hussein Ali”, “Akam Hashem”, “Merchas Doski”, “Zaid Tahseen”, “Manaf Younis”, “Zidane Iqbal”, “Amir Al-Ammari”, “Ibrahim Bavesh”, “Ali Jasim”, “Team Photo”, “Youssef Amyn”, “Aimar Sher”, “Marko Farji”, “Osama Rashid”, “Ali Al-Hamadi”, “Aymen Hussein”, “Mohanad Ali”]
-}, {
-code: “NOR”,
-name: “Norwegen 🇳🇴”,
-group: “I”,
-players: [“Team Logo”, “Orjan Nyland”, “Julian Ryerson”, “Leo Ostigård”, “Kristoffer Ajer”, “Marcus Holmgren Pedersen”, “David Møller Wolfe”, “Torbjørn Heggem”, “Morten Thorsby”, “Martin Ødegaard”, “Sander Berge”, “Andreas Schjelderup”, “Team Photo”, “Patrick Berg”, “Erling Haaland”, “Alexander Sørloth”, “Aron Dønnum”, “Jorgen Strand Larsen”, “Antonio Nusa”, “Oscar Bobb”]
-}, {
-code: “ARG”,
-name: “Argentinien 🇦🇷”,
-group: “J”,
-players: [“Team Logo”, “Emiliano Martinez”, “Nahuel Molina”, “Cristian Romero”, “Nicolas Otamendi”, “Nicolas Tagliafico”, “Leonardo Balerdi”, “Enzo Fernandez”, “Alexis Mac Allister”, “Rodrigo De Paul”, “Exequiel Palacios”, “Leandro Paredes”, “Team Photo”, “Nico Paz”, “Franco Mastantuono”, “Nico Gonzalez”, “Lionel Messi”, “Lautaro Martinez”, “Julian Alvarez”, “Giuliano Simeone”]
-}, {
-code: “ALG”,
-name: “Algerien 🇩🇿”,
-group: “J”,
-players: [“Team Logo”, “Alexis Guendouz”, “Ramy Bensebaini”, “Youcef Atal”, “Rayan Aït-Nouri”, “Mohamed Amine Tougai”, “Aïssa Mandi”, “Ismael Bennacer”, “Houssem Aquar”, “Hicham Boudaoui”, “Ramiz Zerrouki”, “Nabil Bentalab”, “Team Photo”, “Farés Chaibi”, “Riyad Mahrez”, “Said Benrahma”, “Anis Hadj Moussa”, “Amine Gouiri”, “Baghdad Bounedjah”, “Mohammed Amoura”]
-}, {
-code: “AUT”,
-name: “Österreich 🇦🇹”,
-group: “J”,
-players: [“Team Logo”, “Alexander Schlager”, “Patrick Pentz”, “David Alaba”, “Kevin Danso”, “Philipp Lienhart”, “Stefan Posch”, “Phillipp Mwene”, “Alexander Prass”, “Xaver Schlager”, “Marcel Sabitzer”, “Konrad Laimer”, “Team Photo”, “Florian Grillitsch”, “Nicolas Seiwald”, “Romano Schmid”, “Patrick Wimmer”, “Christoph Baumgartner”, “Michael Gregoritsch”, “Marko Arnautović”]
-}, {
-code: “JOR”,
-name: “Jordanien 🇯🇴”,
-group: “J”,
-players: [“Team Logo”, “Yazeed Abulaila”, “Ihsan Haddad”, “Mohammad Abu Hashish”, “Yazan Al-Arab”, “Abdallah Nasib”, “Saleem Obaid”, “Mohammad Abualnadi”, “Ibrahim Saadeh”, “Nizar Al-Rashdan”, “Noor Al-Rawabdeh”, “Mohannad Abu Taha”, “Team Photo”, “Amer Jamous”, “Musa Al-Taamari”, “Yazan Al-Naimat”, “Mahmoud Al-Mardi”, “Ali Olwan”, “Mohammad Abu Zrayq”, “Ibrahim Sabra”]
-}, {
-code: “POR”,
-name: “Portugal 🇵🇹”,
-group: “K”,
-players: [“Team Logo”, “Diogo Costa”, “Jose Sa”, “Ruben Dias”, “João Cancelo”, “Diogo Dalot”, “Nuno Mendes”, “Vitinha”, “Rúben Neves”, “Joao Neves”, “Bruno Fernandes”, “Bernardo Silva”, “Team Photo”, “Otavio”, “Joao Felix”, “Pedro Neto”, “Rafael Leao”, “Cristiano Ronaldo”, “Diogo Jota”, “Goncalo Ramos”]
-}, {
-code: “COL”,
-name: “Kolumbien 🇨🇴”,
-group: “K”,
-players: [“Team Logo”, “Camilo Vargas”, “Carlos Cuesta”, “Davinson Sánchez”, “Yerry Mina”, “Johan Mojica”, “Daniel Muñoz”, “Jefferson Lerma”, “Matheus Uribe”, “Richard Ríos”, “James Rodríguez”, “Jhon Arias”, “Team Photo”, “Juan Cuadrado”, “Sebastian Villa”, “Luis Díaz”, “Jhon Córdoba”, “Radamel Falcao”, “Rafael Santos Borré”, “Jhon Durán”]
-}, {
-code: “GHA”,
-name: “Ghana 🇬🇭”,
-group: “K”,
-players: [“Team Logo”, “Lawrence Ati Zigi”, “Ibrahim Danlad”, “Alexander Djiku”, “Abdul Rahman Baba”, “Daniel Amartey”, “Gideon Mensah”, “Joseph Aidoo”, “Tariq Lamptey”, “Elisha Owusu”, “Iddrisu Baba”, “Thomas Partey”, “Team Photo”, “Mohammed Kudus”, “Osman Bukari”, “Daniel Kofi Kyereh”, “Jordan Ayew”, “Inaki Williams”, “Antoine Semenyo”, “Kwabena Owusu”]
-}, {
-code: “CRO”,
-name: “Kroatien 🇭🇷”,
-group: “K”,
-players: [“Team Logo”, “Dominik Livaković”, “Ivica Ivušić”, “Joško Gvardiol”, “Dejan Lovren”, “Josip Šutalo”, “Domagoj Vida”, “Josip Juranović”, “Borna Sosa”, “Marcelo Brozović”, “Mateo Kovačić”, “Milan Badelj”, “Team Photo”, “Luka Modrić”, “Lovro Majer”, “Mario Pašalić”, “Ante Budimir”, “Ivan Perišić”, “Andrej Kramarić”, “Bruno Petković”]
-}, {
-code: “ENG”,
-name: “England 🏴󠁧󠁢󠁥󠁮󠁧󠁿”,
-group: “L”,
-players: [“Team Logo”, “Jordan Pickford”, “Dean Henderson”, “Reece James”, “Trent Alexander-Arnold”, “John Stones”, “Marc Guéhi”, “Luke Shaw”, “Kyle Walker”, “Declan Rice”, “Kobbie Mainoo”, “Jude Bellingham”, “Team Photo”, “Phil Foden”, “Bukayo Saka”, “Jack Grealish”, “Marcus Rashford”, “Harry Kane”, “Cole Palmer”, “Ollie Watkins”]
-}, {
-code: “COD”,
-name: “Kongo DR 🇨🇩”,
-group: “L”,
-players: [“Team Logo”, “Joris Kayembe”, “Lionel Mpasi”, “Christian Luyindama”, “Chancel Mbemba”, “Marcel Tisserand”, “Cedric Bakambu”, “Paul-José M’Poku”, “Samuel Bastien”, “Nathan Bakumbu”, “Yoane Wissa”, “Silas Katompa”, “Team Photo”, “Mechak Jordan”, “Théo Bongonda”, “Dodi Lukebakio”, “Arthur Masuaku”, “Cédric Bakambu II”, “Mathis Bolly”, “Jordan Ikoko”]
-}, {
-code: “PAN”,
-name: “Panama 🇵🇦”,
-group: “L”,
-players: [“Team Logo”, “Orlando Mosquera”, “Luis Mejía”, “Eric Davis”, “Harold Cummings”, “Fidel Escobar”, “Andrés Andrade”, “Roderick Miller”, “José Fajardo”, “Adalberto Carrasquilla”, “Aníbal Godoy”, “Edgar Bárcenas”, “Team Photo”, “Cecilio Waterman”, “Ismael Díaz”, “Miguel Ángel Taylor”, “Rolando Blackburn”, “Alberto Quintero”, “Alfredo Stephens”, “Adolfo Machado”]
-}];
+const TEAMS = [
+{code:“MEX”,name:“Mexiko 🇲🇽”,group:“A”,players:[“Team Logo”,“Luis Malagón”,“Johan Vasquez”,“Jorge Sánchez”,“Cesar Montes”,“Jesus Gallardo”,“Israel Reyes”,“Diego Lainez”,“Carlos Rodriguez”,“Edson Alvarez”,“Orbelin Pineda”,“Marcel Ruiz”,“Team Photo”,“Érick Sánchez”,“Hirving Lozano”,“Santiago Giménez”,“Raúl Jiménez”,“Alexis Vega”,“Roberto Alvarado”,“Cesar Huerta”]},
+{code:“RSA”,name:“Südafrika 🇿🇦”,group:“A”,players:[“Team Logo”,“Ronwen Williams”,“Sipho Chaine”,“Aubrey Modiba”,“Samukele Kabini”,“Mbekezeli Mbokazi”,“Khulumani Ndamane”,“Siyabonga Ngezana”,“Khuliso Mudau”,“Nkosinathi Sibisi”,“Teboho Mokoena”,“Thalente Mbatha”,“Team Photo”,“Bathasi Aubaas”,“Yaya Sithole”,“Sipho Mbule”,“Lyle Foster”,“Iqraam Rayners”,“Mohau Nkota”,“Oswin Appollis”]},
+{code:“KOR”,name:“Südkorea 🇰🇷”,group:“A”,players:[“Team Logo”,“Hyeon-woo Jo”,“Seung-Gyu Kim”,“Min-jae Kim”,“Yu-min Cho”,“Young-woo Seol”,“Han-beom Lee”,“Tae-seok Lee”,“Myung-jae Lee”,“Jae-sung Lee”,“In-beom Hwang”,“Kang-in Lee”,“Team Photo”,“Seung-ho Paik”,“Jens Castrop”,“Dongg-yeong Lee”,“Gue-sung Cho”,“Heung-min Son”,“Hee-chan Hwang”,“Hyeon-Gyu Oh”]},
+{code:“CZE”,name:“Tschechien 🇨🇿”,group:“A”,players:[“Team Logo”,“Matej Kovar”,“Jindrich Stanek”,“Ladislav Krejci”,“Vladimir Coufal”,“Jaroslav Zeleny”,“Tomas Holes”,“David Zima”,“Michal Sadilek”,“Lukas Provod”,“Lukas Cerv”,“Tomas Soucek”,“Team Photo”,“Pavel Sulc”,“Matej Vydra”,“Vasil Kusej”,“Tomas Chory”,“Vaclav Cerny”,“Adam Hlozek”,“Patrik Schick”]},
+{code:“CAN”,name:“Kanada 🇨🇦”,group:“B”,players:[“Team Logo”,“Dayne St.Clair”,“Alphonso Davies”,“Alistair Johnston”,“Samuel Adekugbe”,“Riche Larvea”,“Derek Cornelius”,“Moïse Bombito”,“Kamal Miller”,“Stephen Eustáquio”,“Ismaël Koné”,“Jonathan Osorio”,“Team Photo”,“Jacob Shaffelburg”,“Mathieu Choinière”,“Niko Sigur”,“Tajon Buchanan”,“Liam Millar”,“Cyle Larin”,“Jonathan David”]},
+{code:“BIH”,name:“Bosnien 🇧🇦”,group:“B”,players:[“Team Logo”,“Nikola Vasilj”,“Amer Dedic”,“Sead Kolasinac”,“Tarik Muharemovic”,“Nihad Mujakic”,“Nikola Katic”,“Amir Hadziahmetovic”,“Benjamin Tahirovic”,“Armin Gigovic”,“Ivan Sunjic”,“Ivan Basic”,“Team Photo”,“Dzenis Burnic”,“Esmir Bajraktarevic”,“Amar Memic”,“Ermedin Demirovic”,“Edin Dzeko”,“Samed Bazdar”,“Haris Tabakovic”]},
+{code:“QAT”,name:“Katar 🇶🇦”,group:“B”,players:[“Team Logo”,“Meshaal Barsham”,“Sultan Albrake”,“Lucas Mendes”,“Homam Ahmed”,“Boualem Khoukhi”,“Pedro Miguel”,“Tarek Salman”,“Mohamed Al-Mannai”,“Karim Boudiaf”,“Assim Madibo”,“Ahmed Fatehi”,“Team Photo”,“Mohammed Waad”,“Abdulaziz Hatem”,“Hassan Al-Haydos”,“Edmilson Junior”,“Akram Hassan Afif”,“Ahmed Al Ganehi”,“Almoez Ali”]},
+{code:“SUI”,name:“Schweiz 🇨🇭”,group:“B”,players:[“Team Logo”,“Gregor Kobel”,“Yvon Mvogo”,“Manuel Akanji”,“Ricardo Rodriguez”,“Nico Elvedi”,“Aurèle Amenda”,“Silvan Widmer”,“Granit Xhaka”,“Denis Zakaria”,“Remo Freuler”,“Fabian Rieder”,“Team Photo”,“Ardon Jashari”,“Johan Manzambi”,“Michel Aebischer”,“Breel Embolo”,“Ruben Vargas”,“Dan Ndoye”,“Zeki Amdouni”]},
+{code:“BRA”,name:“Brasilien 🇧🇷”,group:“C”,players:[“Team Logo”,“Alisson”,“Bento”,“Marquinhos”,“Éder Militão”,“Gabriel Magalhães”,“Danilo”,“Wesley”,“Lucas Paquetá”,“Casemiro”,“Bruno Guimarães”,“Luiz Henrique”,“Team Photo”,“Vinicius Júnior”,“Rodrygo”,“João Pedro”,“Matheus Cunha”,“Gabriel Martinelli”,“Raphinha”,“Estévão”]},
+{code:“MAR”,name:“Marokko 🇲🇦”,group:“C”,players:[“Team Logo”,“Yassine Bounou”,“Munir El Kajoui”,“Achraf Hakimi”,“Noussair Mazraoui”,“Nayef Aguerd”,“Roman Saiss”,“Jawad El Yamio”,“Adam Masina”,“Sofyan Amrabat”,“Azzedine Ounahi”,“Eliesse Ben Seghir”,“Team Photo”,“Bilal El Khannouss”,“Ismael Saibari”,“Youssef En-Nesyri”,“Abde Ezzalzouli”,“Soufiane Rahimi”,“Brahim Diaz”,“Ayoub El Kaabi”]},
+{code:“HAI”,name:“Haiti 🇭🇹”,group:“C”,players:[“Team Logo”,“Johny Placide”,“Carlens Arcus”,“Martin Expérience”,“Jean-Kevin Duverne”,“Ricardo Adé”,“Duke Lacroix”,“Garven Metusala”,“Hannes Delcroix”,“Leverton Pierre”,“Danley Jean Jacques”,“Jean-Ricner Bellegarde”,“Team Photo”,“Christopher Attys”,“Derrick Etienne Jr”,“Josue Casimir”,“Ruben Providence”,“Duckens Nazon”,“Louicius Deedson”,“Frantzdy Pierrot”]},
+{code:“SCO”,name:“Schottland 🏴󠁧󠁢󠁳󠁣󠁴󠁿”,group:“C”,players:[“Team Logo”,“Angus Gunn”,“Jack Hendry”,“Kieran Tierney”,“Aaron Hickey”,“Andrew Robertson”,“Scott McKenna”,“John Souttar”,“Anthony Ralston”,“Grant Hanley”,“Scott McTominay”,“Billy Gilmour”,“Team Photo”,“Lewis Ferguson”,“Ryan Christie”,“Kenny McLean”,“John McGinn”,“Lyndon Dykes”,“Che Adams”,“Ben Gannon-Doak”]},
+{code:“USA”,name:“USA 🇺🇸”,group:“D”,players:[“Team Logo”,“Matt Freese”,“Chris Richards”,“Tim Ream”,“Mark McKenzie”,“Alex Freeman”,“Antonee Robinson”,“Tyler Adams”,“Tanner Tessmann”,“Weston McKenny”,“Christian Roldan”,“Timothy Weah”,“Team Photo”,“Diego Luna”,“Malik Tillman”,“Christian Pulisic”,“Brenden Aaronson”,“Ricardo Pepi”,“Haji Wright”,“Folarin Balogun”]},
+{code:“PAR”,name:“Paraguay 🇵🇾”,group:“D”,players:[“Team Logo”,“Roberto Fernandez”,“Orlando Gill”,“Gustavo Gomez”,“Fabián Balbuena”,“Juan José Cáceres”,“Omar Alderete”,“Junior Alonso”,“Mathías Villasanti”,“Diego Gomez”,“Damián Bobadilla”,“Andres Cubas”,“Team Photo”,“Matias Galarza Fonda”,“Julio Enciso”,“Alejandro Romero Gamarra”,“Miguel Almirón”,“Ramon Sosa”,“Angel Romero”,“Antonio Sanabria”]},
+{code:“AUS”,name:“Australien 🇦🇺”,group:“D”,players:[“Team Logo”,“Mathew Ryan”,“Joe Gauci”,“Harry Souttar”,“Alessandro Circati”,“Jordan Bos”,“Aziz Behich”,“Cameron Burgess”,“Lewis Miller”,“Milos Degenek”,“Jackson Irvine”,“Riley McGree”,“Team Photo”,“Aiden O’Neill”,“Connor Metcalfe”,“Patrick Yazbek”,“Craig Goodwin”,“Kusini Vengi”,“Nestory Irankunda”,“Mohamed Touré”]},
+{code:“TUR”,name:“Türkei 🇹🇷”,group:“D”,players:[“Team Logo”,“Ugurcan Cakir”,“Mert Muldur”,“Zeki Celik”,“Abdulkerim Bardakci”,“Caglar Soyuncu”,“Merih Demiral”,“Ferdi Kadioglu”,“Kaan Ayhan”,“Ismail Yuksek”,“Hakan Calhanoglu”,“Orkun Kokcu”,“Team Photo”,“Arda Guler”,“Irfan Can Kahveci”,“Yunus Akgun”,“Can Uzun”,“Baris Alper Yilmaz”,“Kerem Akturkoglu”,“Kenan Yildiz”]},
+{code:“GER”,name:“Deutschland 🇩🇪”,group:“D”,players:[“Team Logo”,“Marc-André ter Stegen”,“Jonathan Tah”,“David Raum”,“Nico Schlotterbeck”,“Antonio Rüdiger”,“Waldemar Anton”,“Ridle Baku”,“Maximilian Mittelstadt”,“Joshua Kimmich”,“Florian Wirtz”,“Felix Nmecha”,“Team Photo”,“Leon Goretzka”,“Jamal Musiala”,“Serge Gnabry”,“Kai Havertz”,“Leroy Sane”,“Karim Adeyemi”,“Nick Woltemade”]},
+{code:“CUW”,name:“Curaçao 🇨🇼”,group:“E”,players:[“Team Logo”,“Eloy Room”,“Armando Obispo”,“Sherel Floranus”,“Jurien Gaari”,“Joshua Brenet”,“Roshon Van Eijma”,“Shurandy Sambo”,“Livano Comenencia”,“Godfried Roemeratoe”,“Juninho Bacuna”,“Leandro Bacuna”,“Team Photo”,“Tahith Chong”,“Kenji Gorre”,“Jearl Margaritha”,“Jurgen Locadia”,“Jeremy Antonisse”,“Gervane Kastaneer”,“Sontje Hansen”]},
+{code:“IVC”,name:“Elfenbeinküste 🇨🇮”,group:“E”,players:[“Team Logo”,“Yahia Fofana”,“Ghislain Konan”,“Wilfried Singo”,“Odilon Kossounou”,“Evan Ndicka”,“Willy Boly”,“Emmanuel Agbadou”,“Ousmane Diomande”,“Franck Kessie”,“Seko Fofana”,“Ibrahim Sangare”,“Team Photo”,“Jean-Philippe Gbamin”,“Amad Diallo”,“Sébastien Haller”,“Simon Adingra”,“Yan Diomande”,“Evann Guessand”,“Oumar Diakite”]},
+{code:“ECU”,name:“Ecuador 🇪🇨”,group:“E”,players:[“Team Logo”,“Hernán Galíndez”,“Gonzalo Valle”,“Piero Hincapié”,“Pervis Estupiñán”,“Willian Pacho”,“Ángelo Preciado”,“Joel Ordóñez”,“Moises Caicedo”,“Alan Franco”,“Kendry Paez”,“Pedro Vite”,“Team Photo”,“John Yeboah”,“Leonardo Campana”,“Gonzalo Plata”,“Nilson Angulo”,“Alan Minda”,“Kevin Rodriguez”,“Enner Valencia”]},
+{code:“NED”,name:“Niederlande 🇳🇱”,group:“E”,players:[“Team Logo”,“Bart Verbruggen”,“Virgil van Dijk”,“Micky van de Ven”,“Jurriën Timber”,“Denzel Dumfries”,“Nathan Aké”,“Jeremie Frimpong”,“Jan Paul van Hecke”,“Tijjani Reijnders”,“Ryan Gravenberch”,“Teun Koopmeiners”,“Team Photo”,“Frenkie de Jong”,“Xavi Simons”,“Justin Kluivert”,“Memphis Depay”,“Donyell Malen”,“Wout Weghorst”,“Cody Gakpo”]},
+{code:“JPN”,name:“Japan 🇯🇵”,group:“F”,players:[“Team Logo”,“Zion Suzuki”,“Henry Heroki Mochizuki”,“Ayumu Seko”,“Junnosuke Suzuki”,“Shogo Taniguchi”,“Tsuyoshi Watanabe”,“Kaishu Sano”,“Yuki Soma”,“Ao Tanaka”,“Daichi Kamada”,“Takefusa Kubo”,“Team Photo”,“Ritsu Doan”,“Keito Nakamura”,“Takumi Minamino”,“Shuto Machino”,“Junya Ito”,“Koki Ogawa”,“Ayase Ueda”]},
+{code:“SWE”,name:“Schweden 🇸🇪”,group:“F”,players:[“Team Logo”,“Victor Johansson”,“Isak Hien”,“Gabriel Gudmundsson”,“Emil Holm”,“Victor Nilsson Lindelöf”,“Gustaf Lagerbielke”,“Lucas Bergvall”,“Hugo Larsson”,“Jesper Karlström”,“Yasin Ayari”,“Mattias Svanberg”,“Team Photo”,“Daniel Svensson”,“Ken Sema”,“Roony Bardghji”,“Dejan Kulusevski”,“Anthony Elanga”,“Alexander Isak”,“Viktor Gyökeres”]},
+{code:“TUN”,name:“Tunesien 🇹🇳”,group:“F”,players:[“Team Logo”,“Bechir Ben Said”,“Aymen Dahmen”,“Yan Valery”,“Montassar Talbi”,“Yassine Meriah”,“Ali Abdi”,“Dylan Bronn”,“Ellyes Skhiri”,“Aissa Laidouni”,“Ferjani Sassi”,“Mohamed Ali Ben Romdhane”,“Team Photo”,“Hannibal Mejbri”,“Elias Achouri”,“Elias Saad”,“Hazem Mastouri”,“Ismael Gharbi”,“Sayfallah Ltaief”,“Naim Sliti”]},
+{code:“BEL”,name:“Belgien 🇧🇪”,group:“F”,players:[“Team Logo”,“Thibaut Courtois”,“Arthur Theate”,“Timothy Castagne”,“Zeno Debast”,“Brandon Mechele”,“Maxim De Cuyper”,“Thomas Meunier”,“Youri Tielemans”,“Amadou Onana”,“Nicolas Raskin”,“Alexis Saelemaekers”,“Team Photo”,“Hans Vanaken”,“Kevin De Bruyne”,“Jérémy Doku”,“Charles De Ketelaere”,“Leandro Trossard”,“Loïs Openda”,“Romelu Lukaku”]},
+{code:“EGY”,name:“Ägypten 🇪🇬”,group:“G”,players:[“Team Logo”,“Mohamed El Shenawy”,“Mohamed Hany”,“Mohamed Hamdy”,“Yasser Ibrahim”,“Khaled Sobhi”,“Ramy Rabia”,“Hossam Abdelmaguid”,“Ahmed Fatouh”,“Marwan Attia”,“Zizo”,“Hamdy Fathy”,“Team Photo”,“Mohamed Lasheen”,“Emam Ashour”,“Osama Faisal”,“Mohamed Salah”,“Mostafa Mohamed”,“Trezeguet”,“Omar Marmoush”]},
+{code:“IRN”,name:“Iran 🇮🇷”,group:“G”,players:[“Team Logo”,“Alireza Beiranvand”,“Morteza Pouraliganji”,“Ehsan Hajsafi”,“Milad Mohammadi”,“Shojae Khalilzadeh”,“Ramin Rezaeian”,“Hossein Kanaani”,“Sadegh Moharrami”,“Saleh Hardani”,“Saeed Ezatolahi”,“Saman Ghoddos”,“Team Photo”,“Omid Noorafkan”,“Roozbeh Cheshmi”,“Mohammad Mohebi”,“Sardar Azmoun”,“Mehdi Taremi”,“Alireza Jahanbakhsh”,“Ali Gholizadeh”]},
+{code:“NZL”,name:“Neuseeland 🇳🇿”,group:“G”,players:[“Team Logo”,“Max Crocombe Payne”,“Alex Paulsen”,“Michael Boxall”,“Liberato Cacace”,“Tim Payne”,“Tyler Bindon”,“Francis de Vries”,“Finn Surman”,“Joe Bell”,“Sarpreet Singh”,“Ryan Thomas”,“Team Photo”,“Matthew Garbett”,“Marko Stamenić”,“Ben Old”,“Chris Wood”,“Elijah Just”,“Callum McCowatt”,“Kosta Barbarouses”]},
+{code:“ESP”,name:“Spanien 🇪🇸”,group:“G”,players:[“Team Logo”,“Unai Simon”,“Robin Le Normand”,“Aymeric Laporte”,“Dean Huijsen”,“Pedro Porro”,“Dani Carvajal”,“Marc Cucurella”,“Martín Zubimendi”,“Rodri”,“Pedri”,“Fabian Ruiz”,“Team Photo”,“Mikel Merino”,“Lamine Yamal”,“Dani Olmo”,“Nico Williams”,“Ferran Torres”,“Álvaro Morata”,“Mikel Oyarzabal”]},
+{code:“CPV”,name:“Kap Verde 🇨🇻”,group:“H”,players:[“Team Logo”,“Vozinha”,“Logan Costa”,“Pico”,“Diney”,“Steven Moreira”,“Wagner Pina”,“Joao Paulo”,“Yannick Semedo”,“Kevin Pina”,“Patrick Andrade”,“Jamiro Monteiro”,“Team Photo”,“Deroy Duarte”,“Garry Rodrigues”,“Jovane Cabral”,“Ryan Mendes”,“Dailon Livramento”,“Willy Semedo”,“Bebe”]},
+{code:“KSA”,name:“Saudi-Arabien 🇸🇦”,group:“H”,players:[“Team Logo”,“Nawaf Alaqidi”,“Abdulrahman Al-Sanbi”,“Saud Abdulhamid”,“Nawaf Bouwashl”,“Jihad Thakri”,“Moteb Al-Harbi”,“Hassan Altambakti”,“Musab Aljuwayr”,“Ziyad Aljohani”,“Abdullah Alkhaibari”,“Nasser Aldawsari”,“Team Photo”,“Saleh Abu Alshamat”,“Marwan Alsahafi”,“Salem Aldawsari”,“Abdulrahman Al-Aboud”,“Feras Akbrikan”,“Saleh Alshehri”,“Abdullah Al-Hamdan”]},
+{code:“URU”,name:“Uruguay 🇺🇾”,group:“H”,players:[“Team Logo”,“Sergio Rochet”,“Santiago Mele”,“Ronald Araujo”,“José María Giménez”,“Sebastian Caceres”,“Mathias Olivera”,“Guillermo Varela”,“Nahitan Nandez”,“Federico Valverde”,“Giorgian De Arrascaeta”,“Rodrigo Bentancur”,“Team Photo”,“Manuel Ugarte”,“Nicolás de la Cruz”,“Maxi Araujo”,“Darwin Núñez”,“Federico Viñas”,“Rodrigo Aguirre”,“Facundo Pellistri”]},
+{code:“FRA”,name:“Frankreich 🇫🇷”,group:“I”,players:[“Team Logo”,“Mike Maignan”,“Theo Hernandez”,“William Saliba”,“Jules Kounde”,“Ibrahima Konate”,“Dayot Upamecano”,“Lucas Digne”,“Aurélien Tchouaméni”,“Eduardo Camavinga”,“Manu Kone”,“Adrien Rabiot”,“Team Photo”,“Michael Olise”,“Ousmane Dembele”,“Bradley Barcola”,“Désiré Doué”,“Kingsley Coman”,“Hugo Ekitike”,“Kylian Mbappe”]},
+{code:“SEN”,name:“Senegal 🇸🇳”,group:“I”,players:[“Team Logo”,“Edouard Mendy”,“Yehvann Diouf”,“Moussa Niakhaté”,“Abdoulaye Seck”,“Ismail Jakobs”,“El Hadji Malick Diouf”,“Kalidou Koulibaly”,“Idrissa Gana Gueye”,“Pape Matar Sarr”,“Pape Gueye”,“Habib Diarra”,“Team Photo”,“Lamine Camara”,“Sadio Mane”,“Ismaïla Sarr”,“Boulaye Dia”,“Iliman Ndiaye”,“Nicolas Jackson”,“Krepin Diatta”]},
+{code:“IRQ”,name:“Irak 🇮🇶”,group:“I”,players:[“Team Logo”,“Jalal Hassan”,“Rebin Sulaka”,“Hussein Ali”,“Akam Hashem”,“Merchas Doski”,“Zaid Tahseen”,“Manaf Younis”,“Zidane Iqbal”,“Amir Al-Ammari”,“Ibrahim Bavesh”,“Ali Jasim”,“Team Photo”,“Youssef Amyn”,“Aimar Sher”,“Marko Farji”,“Osama Rashid”,“Ali Al-Hamadi”,“Aymen Hussein”,“Mohanad Ali”]},
+{code:“NOR”,name:“Norwegen 🇳🇴”,group:“I”,players:[“Team Logo”,“Orjan Nyland”,“Julian Ryerson”,“Leo Ostigård”,“Kristoffer Ajer”,“Marcus Holmgren Pedersen”,“David Møller Wolfe”,“Torbjørn Heggem”,“Morten Thorsby”,“Martin Ødegaard”,“Sander Berge”,“Andreas Schjelderup”,“Team Photo”,“Patrick Berg”,“Erling Haaland”,“Alexander Sørloth”,“Aron Dønnum”,“Jorgen Strand Larsen”,“Antonio Nusa”,“Oscar Bobb”]},
+{code:“ARG”,name:“Argentinien 🇦🇷”,group:“J”,players:[“Team Logo”,“Emiliano Martinez”,“Nahuel Molina”,“Cristian Romero”,“Nicolas Otamendi”,“Nicolas Tagliafico”,“Leonardo Balerdi”,“Enzo Fernandez”,“Alexis Mac Allister”,“Rodrigo De Paul”,“Exequiel Palacios”,“Leandro Paredes”,“Team Photo”,“Nico Paz”,“Franco Mastantuono”,“Nico Gonzalez”,“Lionel Messi”,“Lautaro Martinez”,“Julian Alvarez”,“Giuliano Simeone”]},
+{code:“ALG”,name:“Algerien 🇩🇿”,group:“J”,players:[“Team Logo”,“Alexis Guendouz”,“Ramy Bensebaini”,“Youcef Atal”,“Rayan Aït-Nouri”,“Mohamed Amine Tougai”,“Aïssa Mandi”,“Ismael Bennacer”,“Houssem Aquar”,“Hicham Boudaoui”,“Ramiz Zerrouki”,“Nabil Bentalab”,“Team Photo”,“Farés Chaibi”,“Riyad Mahrez”,“Said Benrahma”,“Anis Hadj Moussa”,“Amine Gouiri”,“Baghdad Bounedjah”,“Mohammed Amoura”]},
+{code:“AUT”,name:“Österreich 🇦🇹”,group:“J”,players:[“Team Logo”,“Alexander Schlager”,“Patrick Pentz”,“David Alaba”,“Kevin Danso”,“Philipp Lienhart”,“Stefan Posch”,“Phillipp Mwene”,“Alexander Prass”,“Xaver Schlager”,“Marcel Sabitzer”,“Konrad Laimer”,“Team Photo”,“Florian Grillitsch”,“Nicolas Seiwald”,“Romano Schmid”,“Patrick Wimmer”,“Christoph Baumgartner”,“Michael Gregoritsch”,“Marko Arnautović”]},
+{code:“JOR”,name:“Jordanien 🇯🇴”,group:“J”,players:[“Team Logo”,“Yazeed Abulaila”,“Ihsan Haddad”,“Mohammad Abu Hashish”,“Yazan Al-Arab”,“Abdallah Nasib”,“Saleem Obaid”,“Mohammad Abualnadi”,“Ibrahim Saadeh”,“Nizar Al-Rashdan”,“Noor Al-Rawabdeh”,“Mohannad Abu Taha”,“Team Photo”,“Amer Jamous”,“Musa Al-Taamari”,“Yazan Al-Naimat”,“Mahmoud Al-Mardi”,“Ali Olwan”,“Mohammad Abu Zrayq”,“Ibrahim Sabra”]},
+{code:“POR”,name:“Portugal 🇵🇹”,group:“K”,players:[“Team Logo”,“Diogo Costa”,“Jose Sa”,“Ruben Dias”,“João Cancelo”,“Diogo Dalot”,“Nuno Mendes”,“Vitinha”,“Rúben Neves”,“Joao Neves”,“Bruno Fernandes”,“Bernardo Silva”,“Team Photo”,“Otavio”,“Joao Felix”,“Pedro Neto”,“Rafael Leao”,“Cristiano Ronaldo”,“Diogo Jota”,“Goncalo Ramos”]},
+{code:“COL”,name:“Kolumbien 🇨🇴”,group:“K”,players:[“Team Logo”,“Camilo Vargas”,“Carlos Cuesta”,“Davinson Sánchez”,“Yerry Mina”,“Johan Mojica”,“Daniel Muñoz”,“Jefferson Lerma”,“Matheus Uribe”,“Richard Ríos”,“James Rodríguez”,“Jhon Arias”,“Team Photo”,“Juan Cuadrado”,“Sebastian Villa”,“Luis Díaz”,“Jhon Córdoba”,“Radamel Falcao”,“Rafael Santos Borré”,“Jhon Durán”]},
+{code:“GHA”,name:“Ghana 🇬🇭”,group:“K”,players:[“Team Logo”,“Lawrence Ati Zigi”,“Ibrahim Danlad”,“Alexander Djiku”,“Abdul Rahman Baba”,“Daniel Amartey”,“Gideon Mensah”,“Joseph Aidoo”,“Tariq Lamptey”,“Elisha Owusu”,“Iddrisu Baba”,“Thomas Partey”,“Team Photo”,“Mohammed Kudus”,“Osman Bukari”,“Daniel Kofi Kyereh”,“Jordan Ayew”,“Inaki Williams”,“Antoine Semenyo”,“Kwabena Owusu”]},
+{code:“CRO”,name:“Kroatien 🇭🇷”,group:“K”,players:[“Team Logo”,“Dominik Livaković”,“Ivica Ivušić”,“Joško Gvardiol”,“Dejan Lovren”,“Josip Šutalo”,“Domagoj Vida”,“Josip Juranović”,“Borna Sosa”,“Marcelo Brozović”,“Mateo Kovačić”,“Milan Badelj”,“Team Photo”,“Luka Modrić”,“Lovro Majer”,“Mario Pašalić”,“Ante Budimir”,“Ivan Perišić”,“Andrej Kramarić”,“Bruno Petković”]},
+{code:“ENG”,name:“England 🏴󠁧󠁢󠁥󠁮󠁧󠁿”,group:“L”,players:[“Team Logo”,“Jordan Pickford”,“Dean Henderson”,“Reece James”,“Trent Alexander-Arnold”,“John Stones”,“Marc Guéhi”,“Luke Shaw”,“Kyle Walker”,“Declan Rice”,“Kobbie Mainoo”,“Jude Bellingham”,“Team Photo”,“Phil Foden”,“Bukayo Saka”,“Jack Grealish”,“Marcus Rashford”,“Harry Kane”,“Cole Palmer”,“Ollie Watkins”]},
+{code:“COD”,name:“Kongo DR 🇨🇩”,group:“L”,players:[“Team Logo”,“Joris Kayembe”,“Lionel Mpasi”,“Christian Luyindama”,“Chancel Mbemba”,“Marcel Tisserand”,“Cedric Bakambu”,“Paul-José M’Poku”,“Samuel Bastien”,“Nathan Bakumbu”,“Yoane Wissa”,“Silas Katompa”,“Team Photo”,“Mechak Jordan”,“Théo Bongonda”,“Dodi Lukebakio”,“Arthur Masuaku”,“Cédric Bakambu II”,“Mathis Bolly”,“Jordan Ikoko”]},
+{code:“PAN”,name:“Panama 🇵🇦”,group:“L”,players:[“Team Logo”,“Orlando Mosquera”,“Luis Mejía”,“Eric Davis”,“Harold Cummings”,“Fidel Escobar”,“Andrés Andrade”,“Roderick Miller”,“José Fajardo”,“Adalberto Carrasquilla”,“Aníbal Godoy”,“Edgar Bárcenas”,“Team Photo”,“Cecilio Waterman”,“Ismael Díaz”,“Miguel Ángel Taylor”,“Rolando Blackburn”,“Alberto Quintero”,“Alfredo Stephens”,“Adolfo Machado”]},
+];
+
 function buildChecklist() {
-var all = {};
-SPECIAL_SECTIONS.forEach(function (sec) {
-sec.stickers.forEach(function (s) {
-all[s.id] = _objectSpread(_objectSpread({}, s), {}, {
-section: sec.code,
-sectionName: sec.name,
-isSpecial: true
+const all = {};
+SPECIAL_SECTIONS.forEach(sec => {
+sec.stickers.forEach(s => { all[s.id] = { …s, section: sec.code, sectionName: sec.name, isSpecial: true }; });
 });
-});
-});
-TEAMS.forEach(function (t) {
-t.players.forEach(function (p, i) {
-var id = “”.concat(t.code).concat(i + 1);
-all[id] = {
-id: id,
-name: p,
-section: t.code,
-sectionName: t.name,
-teamCode: t.code,
-number: i + 1,
-foil: i === 0,
-isSpecial: false
-};
+TEAMS.forEach(t => {
+t.players.forEach((p, i) => {
+const id = `${t.code}${i+1}`;
+all[id] = { id, name: p, section: t.code, sectionName: t.name, teamCode: t.code, number: i+1, foil: i===0, isSpecial: false };
 });
 });
 return all;
 }
-var CHECKLIST = buildChecklist();
-var ALL_IDS = Object.keys(CHECKLIST);
-var TOTAL = ALL_IDS.length;
-var ALL_CODES = [].concat(_toConsumableArray(SPECIAL_SECTIONS.map(function (s) {
-return s.code;
-})), _toConsumableArray(TEAMS.map(function (t) {
-return t.code;
-})));
+const CHECKLIST = buildChecklist();
+const ALL_IDS = Object.keys(CHECKLIST);
+const TOTAL = ALL_IDS.length;
+const ALL_CODES = […SPECIAL_SECTIONS.map(s=>s.code), …TEAMS.map(t=>t.code)];
+
 function parseIds(text) {
-var upper = text.toUpperCase().replace(/\s+/g, “ “);
-var found = [];
-var re = new RegExp(”\b(”.concat(ALL_CODES.join(”|”), “)(\d{1,2})\b”), “g”);
-var m;
-while ((m = re.exec(upper)) !== null) {
-var id = “”.concat(m[1]).concat(m[2]);
-if (CHECKLIST[id] && !found.includes(id)) found.push(id);
+const upper = text.toUpperCase().replace(/\s+/g,” “);
+const found = [];
+const re = new RegExp(`\\b(${ALL_CODES.join("|")})(\\d{1,2})\\b`,“g”);
+let m;
+while((m = re.exec(upper)) !== null) {
+const id = `${m[1]}${m[2]}`;
+if(CHECKLIST[id] && !found.includes(id)) found.push(id);
 }
-if (upper.includes(“00”) && !found.includes(“00”)) found.push(“00”);
+if(upper.includes(“00”) && !found.includes(“00”)) found.push(“00”);
 return found;
 }
+
 function printList(state) {
-var _buildExportData = buildExportData(state),
-doubles = _buildExportData.doubles,
-missing = _buildExportData.missing;
-var groupBySec = function groupBySec(ids) {
-var map = {};
-ids.forEach(function (id) {
-var s = CHECKLIST[id].section;
-if (!map[s]) map[s] = {
-name: CHECKLIST[id].sectionName,
-ids: []
-};
-map[s].ids.push(id);
-});
+const { doubles, missing } = buildExportData(state);
+const groupBySec = (ids) => {
+const map = {};
+ids.forEach(id => { const s = CHECKLIST[id].section; if(!map[s]) map[s]={name:CHECKLIST[id].sectionName,ids:[]}; map[s].ids.push(id); });
 return Object.values(map);
 };
-var date = new Date().toLocaleDateString(‘de-CH’);
-var html = “<!DOCTYPE html><html><head><meta charset="utf-8"><title>Panini WM 2026</title>\n<style>body{font-family:Arial,sans-serif;font-size:11px;color:#1a1a2e;margin:20px;line-height:1.4}h1{font-size:20px;color:#e11d48;margin-bottom:2px}.sub{color:#666;font-size:11px;margin-bottom:16px}.stats{display:flex;gap:14px;margin-bottom:16px}.st{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;text-align:center}.sv{font-size:20px;font-weight:bold}.sl{font-size:9px;color:#64748b}.sv.g{color:#16a34a}.sv.y{color:#d97706}.sv.r{color:#dc2626}h2{font-size:13px;margin:16px 0 6px;padding-bottom:3px;border-bottom:2px solid}h2.d{color:#d97706;border-color:#fbbf24}h2.m{color:#2563eb;border-color:#93c5fd}.sec{margin-bottom:8px}.sn{font-weight:bold;font-size:9px;color:#475569;margin-bottom:3px}.pills{display:flex;flex-wrap:wrap;gap:3px}.pill{padding:2px 7px;border-radius:20px;font-size:9px;font-weight:bold}.pd{background:#fef9c3;color:#854d0e;border:1px solid #fde047}.pm{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}.ok{color:#16a34a;font-weight:bold}@media print{button{display:none}}</style>\n</head><body>\n<button onclick="window.print()" style="margin-bottom:12px;padding:8px 16px;background:#e11d48;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px">\uD83D\uDDA8\uFE0F Drucken</button>\n<h1>\u26BD Panini WM 2026 \u2013 Meine Sammlung</h1>\n<div class="sub">Stand: “.concat(date, “ \xB7 “).concat(TOTAL, “ Sticker total</div>\n<div class="stats"><div class="st"><div class="sv g">”).concat(Object.keys(state.owned).length, “</div><div class="sl">Habe ich</div></div><div class="st"><div class="sv y">”).concat(doubles.length, “</div><div class="sl">Doppelte</div></div><div class="st"><div class="sv r">”).concat(missing.length, “</div><div class="sl">Fehlen</div></div></div>\n<h2 class="d">\uD83D\uDD01 Doppelte (”).concat(doubles.length, “)</h2>”).concat(doubles.length === 0 ? ‘<p style="color:#888">Keine.</p>’ : groupBySec(doubles).map(function (s) {
-return “<div class="sec"><div class="sn">”.concat(s.name, “</div><div class="pills">”).concat(s.ids.map(function (id) {
-return “<span class="pill pd">”.concat(id, “ \xD7”).concat(state.owned[id], “</span>”);
-}).join(’’), “</div></div>”);
-}).join(’’), “\n<h2 class="m">\uD83C\uDFAF Fehlende (”).concat(missing.length, “)</h2>”).concat(missing.length === 0 ? ‘<p class="ok">🎉 Album komplett!</p>’ : groupBySec(missing).map(function (s) {
-return “<div class="sec"><div class="sn">”.concat(s.name, “</div><div class="pills">”).concat(s.ids.map(function (id) {
-return “<span class="pill pm">”.concat(id, “</span>”);
-}).join(’’), “</div></div>”);
-}).join(’’), “\n</body></html>”);
-var w = window.open(’’, ‘_blank’);
-if (w) {
-w.document.write(html);
-w.document.close();
+const date = new Date().toLocaleDateString(‘de-CH’);
+const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Panini WM 2026</title>
+
+<style>body{font-family:Arial,sans-serif;font-size:11px;color:#1a1a2e;margin:20px;line-height:1.4}h1{font-size:20px;color:#e11d48;margin-bottom:2px}.sub{color:#666;font-size:11px;margin-bottom:16px}.stats{display:flex;gap:14px;margin-bottom:16px}.st{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;text-align:center}.sv{font-size:20px;font-weight:bold}.sl{font-size:9px;color:#64748b}.sv.g{color:#16a34a}.sv.y{color:#d97706}.sv.r{color:#dc2626}h2{font-size:13px;margin:16px 0 6px;padding-bottom:3px;border-bottom:2px solid}h2.d{color:#d97706;border-color:#fbbf24}h2.m{color:#2563eb;border-color:#93c5fd}.sec{margin-bottom:8px}.sn{font-weight:bold;font-size:9px;color:#475569;margin-bottom:3px}.pills{display:flex;flex-wrap:wrap;gap:3px}.pill{padding:2px 7px;border-radius:20px;font-size:9px;font-weight:bold}.pd{background:#fef9c3;color:#854d0e;border:1px solid #fde047}.pm{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}.ok{color:#16a34a;font-weight:bold}@media print{button{display:none}}</style>
+
+</head><body>
+<button onclick="window.print()" style="margin-bottom:12px;padding:8px 16px;background:#e11d48;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px">&#128424; Drucken</button>
+<h1>&#9917; Panini WM 2026 - Meine Sammlung</h1>
+<div class="sub">Stand: ${date} - ${TOTAL} Sticker total</div>
+<div class="stats"><div class="st"><div class="sv g">${Object.keys(state.owned).length}</div><div class="sl">Habe ich</div></div><div class="st"><div class="sv y">${doubles.length}</div><div class="sl">Doppelte</div></div><div class="st"><div class="sv r">${missing.length}</div><div class="sl">Fehlen</div></div></div>
+<h2 class="d">Doppelte (${doubles.length})</h2>${doubles.length===0?'<p style="color:#888">Keine.</p>':groupBySec(doubles).map(s=>'<div class="sec"><div class="sn">'+s.name+'</div><div class="pills">'+s.ids.map(id=>'<span class="pill pd">'+id+' x'+state.owned[id]+'</span>').join('')+'</div></div>').join('')}
+<h2 class="m">Fehlende (${missing.length})</h2>${missing.length===0?'<p class="ok">Album komplett!</p>':groupBySec(missing).map(s=>'<div class="sec"><div class="sn">'+s.name+'</div><div class="pills">'+s.ids.map(id=>'<span class="pill pm">'+id+'</span>').join('')+'</div></div>').join('')}
+</body></html>`;
+  const w = window.open('','_blank');
+  if(w) { w.document.write(html); w.document.close(); }
 }
-}
+
 function buildExportData(state) {
-var doubles = ALL_IDS.filter(function (id) {
-return state.owned[id] > 1;
-});
-var missing = ALL_IDS.filter(function (id) {
-return !state.owned[id];
-});
-var groupBySec = function groupBySec(ids) {
-var map = {};
-ids.forEach(function (id) {
-var s = CHECKLIST[id].section;
-if (!map[s]) map[s] = {
-name: CHECKLIST[id].sectionName,
-ids: []
-};
+const doubles = ALL_IDS.filter(id => state.owned[id] > 1);
+const missing = ALL_IDS.filter(id => !state.owned[id]);
+const groupBySec = (ids) => {
+const map = {};
+ids.forEach(id => {
+const s = CHECKLIST[id].section;
+if(!map[s]) map[s] = { name: CHECKLIST[id].sectionName, ids:[] };
 map[s].ids.push(id);
 });
 return Object.values(map);
 };
-return {
-doubles: doubles,
-missing: missing,
-doublesBySec: groupBySec(doubles),
-missingBySec: groupBySec(missing)
-};
+return { doubles, missing, doublesBySec: groupBySec(doubles), missingBySec: groupBySec(missing) };
 }
-var defaultState = function defaultState() {
-return {
-owned: {},
-needed: {}
-};
-};
-function StickerPopup(_ref) {
-var sticker = _ref.sticker,
-count = _ref.count,
-onAction = _ref.onAction,
-onClose = _ref.onClose;
-return /*#**PURE***/React.createElement(“div”, {
-style: {
-position: “fixed”,
-inset: 0,
-background: “rgba(0,0,0,.6)”,
-zIndex: 200,
-display: “flex”,
-alignItems: “flex-end”,
-justifyContent: “center”
-},
-onClick: onClose
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-background: “var(–s1)”,
-borderRadius: “16px 16px 0 0”,
-padding: “18px 16px 32px”,
-width: “100%”,
-maxWidth: 500
-},
-onClick: function onClick(e) {
-return e.stopPropagation();
+
+const defaultState = () => ({ owned:{}, needed:{} });
+
+function StickerPopup({ sticker, count, onAction, onClose }) {
+return (
+<div style={{position:“fixed”,inset:0,background:“rgba(0,0,0,.6)”,zIndex:200,display:“flex”,alignItems:“flex-end”,justifyContent:“center”}} onClick={onClose}>
+<div style={{background:“var(–s1)”,borderRadius:“16px 16px 0 0”,padding:“18px 16px 32px”,width:“100%”,maxWidth:500}} onClick={e=>e.stopPropagation()}>
+<div style={{fontFamily:”‘Baloo 2’,cursive”,fontSize:“1rem”,marginBottom:3}}>{sticker.id} <span style={{color:“var(–mu)”,fontSize:”.78rem”,fontFamily:“Nunito”}}>— {sticker.name}</span></div>
+<div style={{fontSize:”.75rem”,color:“var(–mu)”,marginBottom:14}}>
+{count > 0 ? `Aktuell: ${count}× vorhanden` : “Noch nicht vorhanden”}
+</div>
+<div style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:8}}>
+<button onClick={()=>onAction(“add”)} style={{padding:“11px 8px”,borderRadius:10,border:“2px solid rgba(34,197,94,.4)”,background:“rgba(34,197,94,.08)”,color:“var(–g)”,fontFamily:“Nunito”,fontSize:”.82rem”,fontWeight:700,cursor:“pointer”}}>
+➕ Hinzufügen<br/><span style={{fontSize:”.68rem”,opacity:.7}}>{count} → {count+1}</span>
+</button>
+<button onClick={()=>onAction(“remove”)} disabled={count===0} style={{padding:“11px 8px”,borderRadius:10,border:“2px solid rgba(239,68,68,.4)”,background:count===0?“rgba(255,255,255,.03)”:“rgba(239,68,68,.08)”,color:count===0?“var(–mu)”:“var(–r)”,fontFamily:“Nunito”,fontSize:”.82rem”,fontWeight:700,cursor:count===0?“not-allowed”:“pointer”}}>
+➖ Entfernen<br/><span style={{fontSize:”.68rem”,opacity:.7}}>{count} → {Math.max(0,count-1)}</span>
+</button>
+</div>
+<button onClick={onClose} style={{marginTop:10,width:“100%”,padding:“9px”,borderRadius:10,border:“1px solid var(–br)”,background:“transparent”,color:“var(–mu)”,fontFamily:“Nunito”,fontSize:”.8rem”,cursor:“pointer”}}>Abbrechen</button>
+</div>
+</div>
+);
 }
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1rem”,
-marginBottom: 3
-}
-}, sticker.id, “ “, /*#**PURE***/React.createElement(“span”, {
-style: {
-color: “var(–mu)”,
-fontSize: “.78rem”,
-fontFamily: “Nunito”
-}
-}, “\u2014 “, sticker.name)), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.75rem”,
-color: “var(–mu)”,
-marginBottom: 14
-}
-}, count > 0 ? “Aktuell: “.concat(count, “\xD7 vorhanden”) : “Noch nicht vorhanden”), /*#**PURE***/React.createElement(“div”, {
-style: {
-display: “grid”,
-gridTemplateColumns: “1fr 1fr”,
-gap: 8
-}
-}, /*#**PURE***/React.createElement(“button”, {
-onClick: function onClick() {
-return onAction(“add”);
-},
-style: {
-padding: “11px 8px”,
-borderRadius: 10,
-border: “2px solid rgba(34,197,94,.4)”,
-background: “rgba(34,197,94,.08)”,
-color: “var(–g)”,
-fontFamily: “Nunito”,
-fontSize: “.82rem”,
-fontWeight: 700,
-cursor: “pointer”
-}
-}, “\u2795 Hinzuf\xFCgen”, /*#**PURE***/React.createElement(“br”, null), /*#**PURE***/React.createElement(“span”, {
-style: {
-fontSize: “.68rem”,
-opacity: .7
-}
-}, count, “ \u2192 “, count + 1)), /*#**PURE***/React.createElement(“button”, {
-onClick: function onClick() {
-return onAction(“remove”);
-},
-disabled: count === 0,
-style: {
-padding: “11px 8px”,
-borderRadius: 10,
-border: “2px solid rgba(239,68,68,.4)”,
-background: count === 0 ? “rgba(255,255,255,.03)” : “rgba(239,68,68,.08)”,
-color: count === 0 ? “var(–mu)” : “var(–r)”,
-fontFamily: “Nunito”,
-fontSize: “.82rem”,
-fontWeight: 700,
-cursor: count === 0 ? “not-allowed” : “pointer”
-}
-}, “\u2796 Entfernen”, /*#**PURE***/React.createElement(“br”, null), /*#**PURE***/React.createElement(“span”, {
-style: {
-fontSize: “.68rem”,
-opacity: .7
-}
-}, count, “ \u2192 “, Math.max(0, count - 1)))), /*#**PURE***/React.createElement(“button”, {
-onClick: onClose,
-style: {
-marginTop: 10,
-width: “100%”,
-padding: “9px”,
-borderRadius: 10,
-border: “1px solid var(–br)”,
-background: “transparent”,
-color: “var(–mu)”,
-fontFamily: “Nunito”,
-fontSize: “.8rem”,
-cursor: “pointer”
-}
-}, “Abbrechen”)));
-}
-function SecDetail(_ref2) {
-var sec = _ref2.sec,
-state = _ref2.state,
-setState = _ref2.setState,
-secStats = _ref2.secStats,
-stkStatus = _ref2.stkStatus,
-onBack = _ref2.onBack;
-var _secStats = secStats(sec),
-tot = _secStats.tot,
-own = _secStats.own;
-var _useState = useState(null),
-_useState2 = _slicedToArray(_useState, 2),
-popup = _useState2[0],
-setPopup = _useState2[1];
-var handleAction = function handleAction(id, action) {
-setState(function (prev) {
-var n = {
-owned: _objectSpread({}, prev.owned),
-needed: _objectSpread({}, prev.needed)
-};
-if (action === “add”) n.owned[id] = (n.owned[id] || 0) + 1;else if (action === “remove”) {
-if ((n.owned[id] || 0) > 1) n.owned[id]–;else delete n.owned[id];
+
+function SecDetail({ sec, state, setState, secStats, stkStatus, onBack }) {
+const { tot, own } = secStats(sec);
+const [popup, setPopup] = useState(null);
+
+const handleAction = (id, action) => {
+setState(prev => {
+const n = { owned:{…prev.owned}, needed:{…prev.needed} };
+if (action === “add”) n.owned[id] = (n.owned[id] || 0) + 1;
+else if (action === “remove”) {
+if ((n.owned[id] || 0) > 1) n.owned[id]–;
+else delete n.owned[id];
 }
 return n;
 });
 setPopup(null);
 };
-return /*#**PURE***/React.createElement(React.Fragment, null, popup && /*#**PURE***/React.createElement(StickerPopup, {
-sticker: popup,
-count: state.owned[popup.id] || 0,
-onAction: function onAction(action) {
-return handleAction(popup.id, action);
-},
-onClose: function onClose() {
-return setPopup(null);
+
+return <>
+{popup && (
+<StickerPopup
+sticker={popup}
+count={state.owned[popup.id] || 0}
+onAction={(action) => handleAction(popup.id, action)}
+onClose={() => setPopup(null)}
+/>
+)}
+<button className="back" onClick={onBack}>← Zurück</button>
+<div style={{marginBottom:8}}>
+<div style={{fontFamily:”‘Baloo 2’,cursive”,fontSize:“1rem”}}>{sec.name}</div>
+<div style={{fontSize:”.72rem”,color:“var(–mu)”}}>{sec.group} · {own}/{tot} gesammelt</div>
+</div>
+<div className="legend">
+<div className="li"><div className=“ld” style={{background:“rgba(34,197,94,.3)”,border:“1.5px solid #22c55e”}}/>Vorhanden</div>
+<div className="li"><div className=“ld” style={{background:“rgba(245,158,11,.3)”,border:“1.5px solid #f59e0b”}}/>Doppelt</div>
+<div className="li"><div className=“ld” style={{background:“rgba(59,130,246,.3)”,border:“1.5px solid #3b82f6”}}/>Gesucht</div>
+<div className="li"><div className=“ld” style={{background:“var(–s2)”,border:“1.5px solid var(–br)”}}/>Fehlt</div>
+<div className=“li” style={{fontSize:”.6rem”}}>✨=Foil</div>
+</div>
+<div className="stk-grid">
+{sec.stickers.map(s => {
+const status = stkStatus(s.id);
+return (
+<div key={s.id} className={`stk ${status} ${s.foil?"foil":""}`} onClick={() => setPopup(s)}>
+<div className="stk-id">{s.id}</div>
+<div className="stk-nm">{s.name}</div>
+{state.owned[s.id] > 1 && <span className="dbadge">×{state.owned[s.id]}</span>}
+</div>
+);
+})}
+</div>
+</>;
 }
-}), /*#**PURE***/React.createElement(“button”, {
-className: “back”,
-onClick: onBack
-}, “\u2190 Zur\xFCck”), /*#**PURE***/React.createElement(“div”, {
-style: {
-marginBottom: 8
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1rem”
-}
-}, sec.name), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.72rem”,
-color: “var(–mu)”
-}
-}, sec.group, “ \xB7 “, own, “/”, tot, “ gesammelt”)), /*#**PURE***/React.createElement(“div”, {
-className: “legend”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “li”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “ld”,
-style: {
-background: “rgba(34,197,94,.3)”,
-border: “1.5px solid #22c55e”
-}
-}), “Vorhanden”), /*#**PURE***/React.createElement(“div”, {
-className: “li”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “ld”,
-style: {
-background: “rgba(245,158,11,.3)”,
-border: “1.5px solid #f59e0b”
-}
-}), “Doppelt”), /*#**PURE***/React.createElement(“div”, {
-className: “li”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “ld”,
-style: {
-background: “rgba(59,130,246,.3)”,
-border: “1.5px solid #3b82f6”
-}
-}), “Gesucht”), /*#**PURE***/React.createElement(“div”, {
-className: “li”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “ld”,
-style: {
-background: “var(–s2)”,
-border: “1.5px solid var(–br)”
-}
-}), “Fehlt”), /*#**PURE***/React.createElement(“div”, {
-className: “li”,
-style: {
-fontSize: “.6rem”
-}
-}, “\u2728=Foil”)), /*#**PURE***/React.createElement(“div”, {
-className: “stk-grid”
-}, sec.stickers.map(function (s) {
-var status = stkStatus(s.id);
-return /*#**PURE***/React.createElement(“div”, {
-key: s.id,
-className: “stk “.concat(status, “ “).concat(s.foil ? “foil” : “”),
-onClick: function onClick() {
-return setPopup(s);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “stk-id”
-}, s.id), /*#**PURE***/React.createElement(“div”, {
-className: “stk-nm”
-}, s.name), state.owned[s.id] > 1 && /*#**PURE***/React.createElement(“span”, {
-className: “dbadge”
-}, “\xD7”, state.owned[s.id]));
-})));
-}
+
 function App() {
-var _useState3 = useState(defaultState),
-_useState4 = _slicedToArray(_useState3, 2),
-state = _useState4[0],
-setState = _useState4[1];
-var _useState5 = useState(“manual”),
-_useState6 = _slicedToArray(_useState5, 2),
-tab = _useState6[0],
-setTab = _useState6[1];
-var _useState7 = useState(false),
-_useState8 = _slicedToArray(_useState7, 2),
-loaded = _useState8[0],
-setLoaded = _useState8[1];
-var _useState9 = useState(false),
-_useState0 = _slicedToArray(_useState9, 2),
-scanning = _useState0[0],
-setScanning = _useState0[1];
-var _useState1 = useState(null),
-_useState10 = _slicedToArray(_useState1, 2),
-scanResult = _useState10[0],
-setScanResult = _useState10[1];
-var _useState11 = useState(“add”),
-_useState12 = _slicedToArray(_useState11, 2),
-scanMode = _useState12[0],
-setScanMode = _useState12[1];
-var _useState13 = useState(””),
-_useState14 = _slicedToArray(_useState13, 2),
-manInput = _useState14[0],
-setManInput = _useState14[1];
-var _useState15 = useState(“add”),
-_useState16 = _slicedToArray(_useState15, 2),
-manMode = _useState16[0],
-setManMode = _useState16[1];
-var _useState17 = useState(null),
-_useState18 = _slicedToArray(_useState17, 2),
-selSec = _useState18[0],
-setSelSec = _useState18[1];
-var _useState19 = useState(“all”),
-_useState20 = _slicedToArray(_useState19, 2),
-albFilter = _useState20[0],
-setAlbFilter = _useState20[1];
-var _useState21 = useState(null),
-_useState22 = _slicedToArray(_useState21, 2),
-kpiModal = _useState22[0],
-setKpiModal = _useState22[1];
-var _useState23 = useState(false),
-_useState24 = _slicedToArray(_useState23, 2),
-exportModal = _useState24[0],
-setExportModal = _useState24[1];
-var _useState25 = useState(null),
-_useState26 = _slicedToArray(_useState25, 2),
-errorMsg = _useState26[0],
-setErrorMsg = _useState26[1];
-var _useState27 = useState(null),
-_useState28 = _slicedToArray(_useState27, 2),
-toast = _useState28[0],
-setToast = _useState28[1];
-var toastRef = useRef(null);
-var fileRef = useRef(null);
-useEffect(function () {
-try {
-var s = localStorage.getItem(“panini26_v3”);
-if (s) setState(JSON.parse(s));
-} catch (_unused) {}
-setLoaded(true);
-}, []);
-useEffect(function () {
-if (loaded) try {
-localStorage.setItem(“panini26_v3”, JSON.stringify(state));
-} catch (_unused2) {}
-}, [state, loaded]);
-var showToast = function showToast(msg) {
-var dur = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2400;
-clearTimeout(toastRef.current);
-setToast(msg);
-toastRef.current = setTimeout(function () {
-return setToast(null);
-}, dur);
-};
-var applyIds = function applyIds(ids, mode) {
-if (!ids.length) {
-showToast(“Keine gültigen Codes.”);
-return;
-}
-setState(function (prev) {
-var n = {
-owned: _objectSpread({}, prev.owned),
-needed: _objectSpread({}, prev.needed)
-};
-if (mode === “add”) ids.forEach(function (id) {
-n.owned[id] = (n.owned[id] || 0) + 1;
-});else if (mode === “remove”) ids.forEach(function (id) {
-if ((n.owned[id] || 0) > 1) n.owned[id]–;else delete n.owned[id];
-});else if (mode === “need”) ids.forEach(function (id) {
-n.needed[id] = true;
-});else ids.forEach(function (id) {
-delete n.needed[id];
-});
+const [state, setState] = useState(defaultState);
+const [tab, setTab] = useState(“manual”);
+const [loaded, setLoaded] = useState(false);
+const [scanning, setScanning] = useState(false);
+const [scanResult, setScanResult] = useState(null);
+const [scanMode, setScanMode] = useState(“add”);
+const [manInput, setManInput] = useState(””);
+const [manMode, setManMode] = useState(“add”);
+const [selSec, setSelSec] = useState(null);
+const [albFilter, setAlbFilter] = useState(“all”);
+const [kpiModal, setKpiModal] = useState(null);
+const [exportModal, setExportModal] = useState(false);
+const [errorMsg, setErrorMsg] = useState(null);
+const [toast, setToast] = useState(null);
+const toastRef = useRef(null);
+const fileRef = useRef(null);
+
+useEffect(()=>{ try{const s=localStorage.getItem(“panini26_v3”);if(s)setState(JSON.parse(s));}catch{}setLoaded(true);},[]);
+useEffect(()=>{ if(loaded)try{localStorage.setItem(“panini26_v3”,JSON.stringify(state));}catch{} },[state,loaded]);
+
+const showToast = (msg, dur=2400) => { clearTimeout(toastRef.current); setToast(msg); toastRef.current=setTimeout(()=>setToast(null), dur); };
+
+const applyIds = (ids, mode) => {
+if(!ids.length){showToast(“Keine gültigen Codes.”);return;}
+setState(prev=>{
+const n={owned:{…prev.owned},needed:{…prev.needed}};
+if(mode===“add”) ids.forEach(id=>{n.owned[id]=(n.owned[id]||0)+1;});
+else if(mode===“remove”) ids.forEach(id=>{if((n.owned[id]||0)>1)n.owned[id]–;else delete n.owned[id];});
+else if(mode===“need”) ids.forEach(id=>{n.needed[id]=true;});
+else ids.forEach(id=>{delete n.needed[id];});
 return n;
 });
-var lbl = {
-add: “hinzugefügt ✓”,
-remove: “entfernt ✓”,
-need: “als fehlend markiert ✓”,
-unneed: “aktualisiert ✓”
+const lbl={add:“hinzugefügt ✓”,remove:“entfernt ✓”,need:“als fehlend markiert ✓”,unneed:“aktualisiert ✓”};
+showToast(`${ids.length} Bild${ids.length!==1?"er":""} ${lbl[mode]}`);
 };
-showToast(””.concat(ids.length, “ Bild”).concat(ids.length !== 1 ? “er” : “”, “ “).concat(lbl[mode]));
-};
-var handleFile = /*#**PURE***/function () {
-var _ref3 = _asyncToGenerator(/*#**PURE***/_regenerator().m(function _callee(e) {
-var _e$target$files;
-var file, preview, _data$content, base64, bitmap, MAX, w, h, canvas, blob, resp, data, txt, _txt, raw, ids, _t, _t2, _t3, _t4;
-return _regenerator().w(function (_context) {
-while (1) switch (_context.p = _context.n) {
-case 0:
-file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
-if (file) {
-_context.n = 1;
-break;
-}
-return _context.a(2);
-case 1:
-e.target.value = “”;
-preview = URL.createObjectURL(file);
-setScanning(true);
-setScanResult(null);
-_context.p = 2;
-_context.p = 3;
-_context.n = 4;
-return createImageBitmap(file);
-case 4:
-bitmap = _context.v;
-MAX = 1200;
-w = bitmap.width, h = bitmap.height;
+
+const handleFile = async (e) => {
+const file = e.target.files?.[0]; if (!file) return; e.target.value = “”;
+const preview = URL.createObjectURL(file);
+setScanning(true); setScanResult(null);
+try {
+// Resize to max 1200px using createImageBitmap (works in sandboxed iframes, no Image/Canvas CSP issues)
+let base64;
+try {
+const bitmap = await createImageBitmap(file);
+const MAX = 1200;
+let w = bitmap.width, h = bitmap.height;
 if (w > MAX || h > MAX) {
-if (w > h) {
-h = Math.round(h * MAX / w);
-w = MAX;
-} else {
-w = Math.round(w * MAX / h);
-h = MAX;
+if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+else { w = Math.round(w * MAX / h); h = MAX; }
 }
-}
-canvas = new OffscreenCanvas(w, h);
+const canvas = new OffscreenCanvas(w, h);
 canvas.getContext(“2d”).drawImage(bitmap, 0, 0, w, h);
 bitmap.close();
-_context.n = 5;
-return canvas.convertToBlob({
-type: “image/jpeg”,
-quality: 0.85
-});
-case 5:
-blob = _context.v;
-_context.n = 6;
-return new Promise(function (res, rej) {
-var r = new FileReader();
-r.onload = function () {
-return res(r.result.split(”,”)[1]);
-};
+const blob = await canvas.convertToBlob({ type: “image/jpeg”, quality: 0.85 });
+base64 = await new Promise((res, rej) => {
+const r = new FileReader();
+r.onload = () => res(r.result.split(”,”)[1]);
 r.onerror = rej;
 r.readAsDataURL(blob);
 });
-case 6:
-base64 = _context.v;
-_context.n = 9;
-break;
-case 7:
-_context.p = 7;
-_t = _context.v;
-_context.n = 8;
-return new Promise(function (res, rej) {
-var r = new FileReader();
-r.onload = function () {
-return res(r.result.split(”,”)[1]);
-};
-r.onerror = function () {
-return rej(new Error(“Bild lesen fehlgeschlagen”));
-};
+} catch {
+// Fallback: send file directly
+base64 = await new Promise((res, rej) => {
+const r = new FileReader();
+r.onload = () => res(r.result.split(”,”)[1]);
+r.onerror = () => rej(new Error(“Bild lesen fehlgeschlagen”));
 r.readAsDataURL(file);
 });
-case 8:
-base64 = _context.v;
-case 9:
-_context.p = 9;
-_context.n = 10;
-return fetch(“https://api.anthropic.com/v1/messages”, {
-method: “POST”,
-headers: {
-“Content-Type”: “application/json”,
-“anthropic-dangerous-direct-browser-access”: “true”
-},
-body: JSON.stringify({
-model: “claude-sonnet-4-20250514”,
-max_tokens: 800,
-messages: [{
-role: “user”,
-content: [{
-type: “image”,
-source: {
-type: “base64”,
-media_type: “image/jpeg”,
-data: base64
 }
-}, {
-type: “text”,
-text: “Panini FIFA World Cup 2026 Sticker. Erkenne alle Codes auf der R\xFCckseite. Format: L\xE4nderk\xFCrzel + Zahl 1-20, z.B. ARG20, GER11, SUI9, FWC3, CCL1.\n\nM\xF6gliche K\xFCrzel: MEX RSA KOR CZE CAN BIH QAT SUI BRA MAR HAI SCO USA PAR AUS TUR ARG EGY JOR NOR GHA FRA ENG TUN NZL ESP COD URU PAN COL AUT JPN BEL POR CPV IRQ CUW NED SEN ECU UZB CRO IVC ALG SAU GER IRN SWE FWC CCL\n\nNur kommagetrennte Liste ausgeben, z.B.: MEX1, ARG20, GER11\nFalls keine: KEINE”
-}]
-}]
-})
-});
-case 10:
-resp = _context.v;
-_context.n = 12;
-break;
-case 11:
-_context.p = 11;
-_t2 = _context.v;
-throw new Error(“Fetch fehlgeschlagen: “ + _t2.message);
-case 12:
-if (resp.ok) {
-_context.n = 14;
-break;
+
+```
+  let resp, data;
+  try {
+    resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "anthropic-dangerous-direct-browser-access": "true" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514", max_tokens: 800,
+        messages: [{ role: "user", content: [
+          { type: "image", source: { type: "base64", media_type: "image/jpeg", data: base64 } },
+          { type: "text", text: `Panini FIFA World Cup 2026 Sticker. Erkenne alle Codes auf der Rückseite. Format: Länderkürzel + Zahl 1-20, z.B. ARG20, GER11, SUI9, FWC3, CCL1.\n\nMögliche Kürzel: MEX RSA KOR CZE CAN BIH QAT SUI BRA MAR HAI SCO USA PAR AUS TUR ARG EGY JOR NOR GHA FRA ENG TUN NZL ESP COD URU PAN COL AUT JPN BEL POR CPV IRQ CUW NED SEN ECU UZB CRO IVC ALG SAU GER IRN SWE FWC CCL\n\nNur kommagetrennte Liste ausgeben, z.B.: MEX1, ARG20, GER11\nFalls keine: KEINE` }
+        ]}]
+      })
+    });
+  } catch(fetchErr) {
+    throw new Error("Fetch fehlgeschlagen: " + fetchErr.message);
+  }
+
+  if (!resp.ok) {
+    const txt = await resp.text().catch(()=>"");
+    throw new Error(`HTTP ${resp.status}: ${txt.slice(0,150)}`);
+  }
+
+  try {
+    data = await resp.json();
+  } catch(jsonErr) {
+    const txt = await resp.text().catch(()=>"");
+    throw new Error("JSON parse fehler: " + txt.slice(0,150));
+  }
+
+  if (data.error) throw new Error("API Fehler: " + JSON.stringify(data.error));
+  if (!data.content) throw new Error("Kein content: " + JSON.stringify(data).slice(0, 150));
+  const raw = data.content?.find(b => b.type === "text")?.text?.trim() || "";
+  const ids = raw === "KEINE" ? [] : parseIds(raw);
+  setScanResult({ ids, preview });
+  if (!ids.length) showToast("Keine Codes erkannt — klareres Foto versuchen.");
+} catch(err) {
+  setErrorMsg(err.message || "Unbekannter Fehler");
 }
-_context.n = 13;
-return resp.text()[“catch”](function () {
-return “”;
-});
-case 13:
-txt = _context.v;
-throw new Error(“HTTP “.concat(resp.status, “: “).concat(txt.slice(0, 150)));
-case 14:
-_context.p = 14;
-_context.n = 15;
-return resp.json();
-case 15:
-data = _context.v;
-_context.n = 18;
-break;
-case 16:
-_context.p = 16;
-_t3 = _context.v;
-_context.n = 17;
-return resp.text()[“catch”](function () {
-return “”;
-});
-case 17:
-_txt = _context.v;
-throw new Error(“JSON parse fehler: “ + _txt.slice(0, 150));
-case 18:
-if (!data.error) {
-_context.n = 19;
-break;
-}
-throw new Error(“API Fehler: “ + JSON.stringify(data.error));
-case 19:
-if (data.content) {
-_context.n = 20;
-break;
-}
-throw new Error(“Kein content: “ + JSON.stringify(data).slice(0, 150));
-case 20:
-raw = ((_data$content = data.content) === null || _data$content === void 0 || (_data$content = _data$content.find(function (b) {
-return b.type === “text”;
-})) === null || _data$content === void 0 || (_data$content = _data$content.text) === null || _data$content === void 0 ? void 0 : _data$content.trim()) || “”;
-ids = raw === “KEINE” ? [] : parseIds(raw);
-setScanResult({
-ids: ids,
-preview: preview
-});
-if (!ids.length) showToast(“Keine Codes erkannt — klareres Foto versuchen.”);
-_context.n = 22;
-break;
-case 21:
-_context.p = 21;
-_t4 = _context.v;
-setErrorMsg(_t4.message || “Unbekannter Fehler”);
-case 22:
 setScanning(false);
-case 23:
-return _context.a(2);
-}
-}, _callee, null, [[14, 16], [9, 11], [3, 7], [2, 21]]);
-}));
-return function handleFile(_x) {
-return _ref3.apply(this, arguments);
+```
+
 };
-}();
-var owned = Object.keys(state.owned).length;
-var doubles = Object.values(state.owned).filter(function (c) {
-return c > 1;
-}).length;
-var missing = TOTAL - owned;
-var needed = ALL_IDS.filter(function (id) {
-return state.needed[id] && !state.owned[id];
-}).length;
-var pct = Math.round(owned / TOTAL * 100);
-var allSections = [].concat(_toConsumableArray(SPECIAL_SECTIONS.map(function (s) {
-return {
-code: s.code,
-name: s.name,
-group: “Spezial”,
-stickers: s.stickers,
-isSpecial: true
-};
-})), _toConsumableArray(TEAMS.map(function (t) {
-return {
-code: t.code,
-name: t.name,
-group: “Gruppe “.concat(t.group),
-stickers: t.players.map(function (p, i) {
-return {
-id: “”.concat(t.code).concat(i + 1),
-name: p,
-foil: i === 0
-};
-}),
-isSpecial: false
-};
-})));
-var secStats = function secStats(s) {
-var tot = s.stickers.length,
-own = s.stickers.filter(function (x) {
-return state.owned[x.id];
-}).length;
-return {
-tot: tot,
-own: own,
-mis: tot - own
-};
-};
-var filtSecs = allSections.filter(function (s) {
-var _secStats2 = secStats(s),
-own = _secStats2.own,
-mis = _secStats2.mis;
-if (albFilter === “complete”) return mis === 0;
-if (albFilter === “started”) return own > 0 && mis > 0;
-if (albFilter === “empty”) return own === 0;
+
+const owned=Object.keys(state.owned).length;
+const doubles=Object.values(state.owned).filter(c=>c>1).length;
+const missing=TOTAL-owned;
+const needed=ALL_IDS.filter(id=>state.needed[id]&&!state.owned[id]).length;
+const pct=Math.round((owned/TOTAL)*100);
+
+const allSections=[
+…SPECIAL_SECTIONS.map(s=>({code:s.code,name:s.name,group:“Spezial”,stickers:s.stickers,isSpecial:true})),
+…TEAMS.map(t=>({code:t.code,name:t.name,group:`Gruppe ${t.group}`,stickers:t.players.map((p,i)=>({id:`${t.code}${i+1}`,name:p,foil:i===0})),isSpecial:false}))
+];
+const secStats=s=>{const tot=s.stickers.length,own=s.stickers.filter(x=>state.owned[x.id]).length;return{tot,own,mis:tot-own};};
+const filtSecs=allSections.filter(s=>{
+const{own,mis}=secStats(s);
+if(albFilter===“complete”)return mis===0;
+if(albFilter===“started”)return own>0&&mis>0;
+if(albFilter===“empty”)return own===0;
 return true;
 });
-var stkStatus = function stkStatus(id) {
-return state.owned[id] > 1 ? “double” : state.owned[id] === 1 ? “owned” : state.needed[id] ? “needed” : “missing”;
-};
-return /*#**PURE***/React.createElement(“div”, {
-className: “app”
-}, /*#**PURE***/React.createElement(“style”, null, “\n        @import url(‘https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap’);\n        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}\n        :root{–g:#22c55e;–y:#f59e0b;–r:#ef4444;–b:#3b82f6;–p:#a855f7;–bg:#0f0e17;–s1:#1a1928;–s2:#232238;–br:#2e2d4a;–tx:#f0eeff;–mu:#8885a8;–rr:12px}\n        body{background:var(–bg)}\n        .app{min-height:100vh;background:var(–bg);color:var(–tx);font-family:‘Nunito’,sans-serif;max-width:700px;margin:0 auto;padding:14px 11px 80px}\n        h1{font-family:‘Baloo 2’,cursive;font-size:1.85rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}\n        .sub{color:var(–mu);font-size:.78rem;text-align:center;margin-bottom:11px}\n        .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}\n        .sc{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:9px 4px;text-align:center}\n        .sv{font-family:‘Baloo 2’,cursive;font-size:1.45rem;font-weight:800;line-height:1}\n        .sl{font-size:.6rem;color:var(–mu);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}\n        .sc.g .sv{color:var(–g)}.sc.y .sv{color:var(–y)}.sc.r .sv{color:var(–r)}.sc.p .sv{color:var(–p)}\n        .pb-w{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:10px 12px;margin-bottom:11px}\n        .pb-l{display:flex;justify-content:space-between;font-size:.74rem;color:var(–mu);margin-bottom:5px}\n        .pb{height:10px;border-radius:999px;background:var(–br);overflow:hidden}\n        .pb-f{height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#84cc16);transition:width .5s}\n        .tabs{display:flex;gap:4px;margin-bottom:11px;background:var(–s1);padding:4px;border-radius:var(–rr);border:1px solid var(–br)}\n        .tab{flex:1;padding:6px 2px;border:none;border-radius:8px;background:transparent;color:var(–mu);font-family:‘Nunito’,sans-serif;font-size:.69rem;font-weight:700;cursor:pointer;transition:all .2s}\n        .tab.active{background:var(–s2);color:var(–tx);box-shadow:0 2px 6px rgba(0,0,0,.3)}\n        .row2{display:flex;gap:6px;margin-bottom:9px}\n        .mbtn{flex:1;padding:8px;border-radius:9px;border:2px solid var(–br);background:transparent;color:var(–mu);font-family:‘Nunito’,sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .2s}\n        .mbtn.active.add{border-color:var(–g);color:var(–g);background:rgba(34,197,94,.08)}\n        .mbtn.active.need{border-color:var(–b);color:var(–b);background:rgba(59,130,246,.08)}\n        .upload{background:var(–s1);border:2px dashed var(–br);border-radius:var(–rr);padding:22px 14px;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:9px}\n        .upload:hover{border-color:var(–y)}\n        .upload-icon{font-size:2.1rem;margin-bottom:5px}\n        .upload h3{font-family:‘Baloo 2’,cursive;font-size:.95rem;color:var(–y);margin-bottom:2px}\n        .upload p{font-size:.73rem;color:var(–mu)}\n        .spin{background:var(–s1);border-radius:var(–rr);padding:24px;text-align:center;border:1px solid var(–br);margin-bottom:9px}\n        .spinner{width:36px;height:36px;border:3px solid var(–br);border-top-color:var(–y);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px}\n        @keyframes spin{to{transform:rotate(360deg)}}\n        .spin strong{font-family:‘Baloo 2’,cursive;font-size:.9rem;color:var(–y);display:block;margin-bottom:3px}\n        .spin p{font-size:.76rem;color:var(–mu)}\n        .res-box{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:12px;margin-bottom:9px}\n        .res-hd{display:flex;gap:8px;align-items:center;margin-bottom:8px}\n        .thumb{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(–br);flex-shrink:0}\n        .res-hd h4{font-family:‘Baloo 2’,cursive;font-size:.88rem;color:var(–g)}\n        .res-hd p{font-size:.7rem;color:var(–mu);margin-top:1px}\n        .scan-pills{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:9px;max-height:130px;overflow-y:auto}\n        .sp{display:flex;align-items:center;gap:3px;padding:2px 7px 2px 8px;border-radius:999px;background:rgba(34,197,94,.1);color:var(–g);border:1px solid rgba(34,197,94,.2);font-size:.71rem;font-weight:700}\n        .sp em{font-size:.62rem;color:var(–mu);font-style:normal}\n        .sp button{background:none;border:none;color:var(–mu);cursor:pointer;font-size:.8rem;line-height:1}\n        .sp button:hover{color:var(–r)}\n        .res-acts{display:flex;gap:5px}\n        .btn-ok{flex:1;padding:9px;border-radius:8px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:‘Baloo 2’,cursive;font-size:.82rem;font-weight:800;cursor:pointer}\n        .btn-x{padding:9px 12px;border-radius:8px;border:1px solid var(–br);background:transparent;color:var(–mu);font-family:‘Nunito’,sans-serif;font-size:.78rem;cursor:pointer}\n        .tip{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:8px 11px;font-size:.72rem;color:var(–mu)}\n        .panel{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:12px;margin-bottom:11px}\n        .panel h3{font-family:‘Baloo 2’,cursive;font-size:.88rem;color:var(–y);margin-bottom:8px}\n        .m4{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px}\n        .mb{padding:6px;border-radius:8px;border:2px solid var(–br);background:transparent;color:var(–mu);font-family:‘Nunito’,sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s}\n        .mb.active.add{border-color:var(–g);color:var(–g);background:rgba(34,197,94,.08)}\n        .mb.active.remove{border-color:var(–r);color:var(–r);background:rgba(239,68,68,.08)}\n        .mb.active.need{border-color:var(–b);color:var(–b);background:rgba(59,130,246,.08)}\n        .mb.active.unneed{border-color:var(–mu);color:var(–mu);background:rgba(136,133,168,.08)}\n        textarea{width:100%;min-height:64px;background:var(–bg);border:1px solid var(–br);border-radius:8px;color:var(–tx);font-family:‘Nunito’,sans-serif;font-size:.84rem;padding:8px;resize:vertical;outline:none;transition:border-color .2s}\n        textarea:focus{border-color:var(–y)} textarea::placeholder{color:var(–mu)}\n        .btn-go{margin-top:6px;width:100%;padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:‘Baloo 2’,cursive;font-size:.88rem;font-weight:800;cursor:pointer}\n        .frow{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}\n        .flt{padding:3px 10px;border-radius:999px;border:1.5px solid var(–br);background:transparent;color:var(–mu);font-size:.68rem;font-weight:700;cursor:pointer;font-family:‘Nunito’,sans-serif}\n        .flt.active{border-color:var(–y);color:var(–y)}\n        .sec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}\n        .sec-card{background:var(–s1);border:1px solid var(–br);border-radius:var(–rr);padding:8px 10px;cursor:pointer;transition:border-color .2s}\n        .sec-card:hover{border-color:var(–y)}\n        .sec-card.sp{border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.06)}\n        .sec-card h4{font-size:.8rem;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n        .mini-bar{height:4px;border-radius:999px;background:var(–br);overflow:hidden;margin-bottom:3px}\n        .mini-f{height:100%;border-radius:999px;background:linear-gradient(90deg,var(–g),#84cc16)}\n        .sec-meta{display:flex;justify-content:space-between;font-size:.62rem;color:var(–mu)}\n        .glbl{font-size:.58rem;color:var(–mu);margin-bottom:2px}\n        .back{background:none;border:1px solid var(–br);color:var(–mu);padding:4px 11px;border-radius:999px;font-family:‘Nunito’,sans-serif;font-size:.74rem;cursor:pointer;margin-bottom:9px}\n        .stk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}\n        .stk{border-radius:7px;padding:5px 3px;text-align:center;cursor:pointer;transition:transform .1s;user-select:none;position:relative}\n        .stk:active{transform:scale(.91)}\n        .stk-id{font-size:.58rem;font-weight:800}\n        .stk-nm{font-size:.53rem;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n        .stk.foil .stk-id::after{content:" \u2728";font-size:.48rem}\n        .stk.owned{background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);color:var(–g)}\n        .stk.double{background:rgba(245,158,11,.15);border:1.5px solid rgba(245,158,11,.35);color:var(–y)}\n        .stk.needed{background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.3);color:var(–b)}\n        .stk.missing{background:var(–s2);border:1.5px solid var(–br);color:var(–mu)}\n        .dbadge{position:absolute;top:-4px;right:-4px;background:var(–y);color:#000;font-size:.44rem;font-weight:800;border-radius:999px;min-width:12px;height:12px;display:flex;align-items:center;justify-content:center;padding:0 2px}\n        .legend{display:flex;gap:7px;flex-wrap:wrap;font-size:.65rem;color:var(–mu);margin-bottom:8px}\n        .li{display:flex;align-items:center;gap:3px}\n        .ld{width:10px;height:10px;border-radius:3px;flex-shrink:0}\n        .ov-sec{margin-bottom:15px}\n        .ov-sec h3{font-family:‘Baloo 2’,cursive;font-size:.88rem;margin-bottom:5px}\n        .pills{display:flex;flex-wrap:wrap;gap:3px}\n        .pill{padding:2px 7px;border-radius:999px;font-size:.7rem;font-weight:700}\n        .pill.d{background:rgba(245,158,11,.12);color:var(–y);border:1px solid rgba(245,158,11,.22)}\n        .pill.n{background:rgba(59,130,246,.12);color:var(–b);border:1px solid rgba(59,130,246,.22)}\n        .empty{color:var(–mu);font-size:.76rem;font-style:italic}\n        .exp-btn{width:100%;padding:11px;border-radius:var(–rr);border:none;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-family:‘Baloo 2’,cursive;font-size:.88rem;font-weight:800;cursor:pointer;margin-bottom:13px}\n        .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(–s2);border:1px solid var(–br);color:var(–tx);padding:7px 15px;border-radius:12px;font-size:.75rem;font-weight:700;z-index:999;box-shadow:0 6px 18px rgba(0,0,0,.5);animation:fu .2s ease;max-width:90vw;word-break:break-all;cursor:pointer;text-align:center}\n        @keyframes fu{from{opacity:0;transform:translateX(-50%) translateY(7px)}}\n        .reset-btn{display:block;margin:13px auto 0;background:none;border:1px solid var(–br);color:var(–mu);font-size:.68rem;padding:4px 12px;border-radius:999px;cursor:pointer;font-family:‘Nunito’,sans-serif}\n        .reset-btn:hover{color:var(–r);border-color:var(–r)}\n        input[type=file]{display:none}\n      “), /*#**PURE***/React.createElement(“h1”, null, “\u26BD Panini WM 2026”), /*#**PURE***/React.createElement(“div”, {
-className: “sub”
-}, “FIFA World Cup 2026 \xB7 “, TOTAL, “ Sticker \xB7 48 Teams + Spezialseiten”), kpiModal && function () {
-var configs = {
-owned: {
-title: “Habe ich”,
-color: “var(–g)”,
-ids: ALL_IDS.filter(function (id) {
-return state.owned[id] >= 1;
-})
-},
-doubles: {
-title: “Doppelte”,
-color: “var(–y)”,
-ids: ALL_IDS.filter(function (id) {
-return state.owned[id] > 1;
-})
-},
-missing: {
-title: “Fehlende”,
-color: “var(–r)”,
-ids: ALL_IDS.filter(function (id) {
-return !state.owned[id];
-})
-},
-needed: {
-title: “Gesuchte”,
-color: “var(–p)”,
-ids: ALL_IDS.filter(function (id) {
-return state.needed[id] && !state.owned[id];
-})
-}
-};
-var cfg = configs[kpiModal];
-// Group by section
-var grouped = {};
-cfg.ids.forEach(function (id) {
-var s = CHECKLIST[id].section;
-var sn = CHECKLIST[id].sectionName;
-if (!grouped[s]) grouped[s] = {
-name: sn,
-ids: []
-};
-grouped[s].ids.push(id);
-});
-var sections = Object.values(grouped);
-return /*#**PURE***/React.createElement(“div”, {
-style: {
-position: “fixed”,
-inset: 0,
-background: “rgba(0,0,0,.7)”,
-zIndex: 300,
-display: “flex”,
-flexDirection: “column”
-},
-onClick: function onClick() {
-return setKpiModal(null);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-flex: 1,
-maxHeight: “10vh”
-}
-}), /*#**PURE***/React.createElement(“div”, {
-style: {
-background: “var(–s1)”,
-borderRadius: “16px 16px 0 0”,
-maxHeight: “90vh”,
-display: “flex”,
-flexDirection: “column”
-},
-onClick: function onClick(e) {
-return e.stopPropagation();
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-padding: “14px 16px 10px”,
-borderBottom: “1px solid var(–br)”,
-display: “flex”,
-alignItems: “center”,
-justifyContent: “space-between”,
-flexShrink: 0
-}
-}, /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“span”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1.1rem”,
-color: cfg.color
-}
-}, cfg.title), /*#**PURE***/React.createElement(“span”, {
-style: {
-fontSize: “.78rem”,
-color: “var(–mu)”,
-marginLeft: 8
-}
-}, cfg.ids.length, “ Sticker”)), /*#**PURE***/React.createElement(“button”, {
-onClick: function onClick() {
-return setKpiModal(null);
-},
-style: {
-background: “none”,
-border: “1px solid var(–br)”,
-color: “var(–mu)”,
-borderRadius: 999,
-padding: “3px 11px”,
-cursor: “pointer”,
-fontFamily: “Nunito”,
-fontSize: “.78rem”
-}
-}, “\u2715”)), /*#**PURE***/React.createElement(“div”, {
-style: {
-overflowY: “auto”,
-padding: “12px 14px 32px”
-}
-}, sections.length === 0 && /*#**PURE***/React.createElement(“p”, {
-style: {
-color: “var(–mu)”,
-fontSize: “.82rem”,
-fontStyle: “italic”,
-textAlign: “center”,
-padding: “20px 0”
-}
-}, “Keine Sticker.”), sections.map(function (sec) {
-return /*#**PURE***/React.createElement(“div”, {
-key: sec.name,
-style: {
-marginBottom: 12
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.7rem”,
-color: “var(–mu)”,
-fontWeight: 700,
-marginBottom: 5,
-textTransform: “uppercase”,
-letterSpacing: “.04em”
-}
-}, sec.name), /*#**PURE***/React.createElement(“div”, {
-style: {
-display: “flex”,
-flexWrap: “wrap”,
-gap: 4
-}
-}, sec.ids.map(function (id) {
-return /*#**PURE***/React.createElement(“span”, {
-key: id,
-style: {
-padding: “2px 9px”,
-borderRadius: 999,
-fontSize: “.73rem”,
-fontWeight: 700,
-background: kpiModal === “doubles” ? “rgba(245,158,11,.12)” : kpiModal === “missing” ? “rgba(239,68,68,.1)” : kpiModal === “needed” ? “rgba(168,85,247,.12)” : “rgba(34,197,94,.12)”,
-color: kpiModal === “doubles” ? “var(–y)” : kpiModal === “missing” ? “var(–r)” : kpiModal === “needed” ? “var(–p)” : “var(–g)”,
-border: “1px solid “.concat(kpiModal === “doubles” ? “rgba(245,158,11,.25)” : kpiModal === “missing” ? “rgba(239,68,68,.25)” : kpiModal === “needed” ? “rgba(168,85,247,.25)” : “rgba(34,197,94,.25)”)
-}
-}, id, kpiModal === “doubles” ? “ \xD7”.concat(state.owned[id]) : “”);
-})));
-}))));
-}(), /*#**PURE***/React.createElement(“div”, {
-className: “stats”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “sc g”,
-style: {
-cursor: “pointer”
-},
-onClick: function onClick() {
-return setKpiModal(“owned”);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “sv”
-}, owned), /*#**PURE***/React.createElement(“div”, {
-className: “sl”
-}, “Habe ich”)), /*#**PURE***/React.createElement(“div”, {
-className: “sc y”,
-style: {
-cursor: “pointer”
-},
-onClick: function onClick() {
-return setKpiModal(“doubles”);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “sv”
-}, doubles), /*#**PURE***/React.createElement(“div”, {
-className: “sl”
-}, “Doppelt”)), /*#**PURE***/React.createElement(“div”, {
-className: “sc r”,
-style: {
-cursor: “pointer”
-},
-onClick: function onClick() {
-return setKpiModal(“missing”);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “sv”
-}, missing), /*#**PURE***/React.createElement(“div”, {
-className: “sl”
-}, “Fehlen”)), /*#**PURE***/React.createElement(“div”, {
-className: “sc p”,
-style: {
-cursor: “pointer”
-},
-onClick: function onClick() {
-return setKpiModal(“needed”);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “sv”
-}, needed), /*#**PURE***/React.createElement(“div”, {
-className: “sl”
-}, “Gesucht”))), /*#**PURE***/React.createElement(“div”, {
-className: “pb-w”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “pb-l”
-}, /*#**PURE***/React.createElement(“span”, null, “Fortschritt”), /*#**PURE***/React.createElement(“span”, null, owned, “ / “, TOTAL, “ (”, pct, “%)”)), /*#**PURE***/React.createElement(“div”, {
-className: “pb”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “pb-f”,
-style: {
-width: “”.concat(pct, “%”)
-}
-}))), /*#**PURE***/React.createElement(“div”, {
-className: “tabs”
-}, [[“manual”, “✏️ Eingabe”], [“album”, “📚 Album”], [“overview”, “📋 Liste”]].map(function (_ref4) {
-var _ref5 = _slicedToArray(_ref4, 2),
-id = _ref5[0],
-lbl = _ref5[1];
-return /*#**PURE***/React.createElement(“button”, {
-key: id,
-className: “tab “.concat(tab === id ? “active” : “”),
-onClick: function onClick() {
-setTab(id);
-setSelSec(null);
-}
-}, lbl);
-})), tab === “manual” && /*#**PURE***/React.createElement(“div”, {
-className: “panel”
-}, /*#**PURE***/React.createElement(“h3”, null, “Codes manuell eingeben”), /*#**PURE***/React.createElement(“div”, {
-className: “m4”
-}, [[“add”, “add”, “✅ Hinzufügen”], [“remove”, “remove”, “🗑 Entfernen”], [“need”, “need”, “🎯 Fehlend”], [“unneed”, “unneed”, “✖ Fehlend aufheben”]].map(function (_ref6) {
-var _ref7 = _slicedToArray(_ref6, 3),
-id = _ref7[0],
-cls = _ref7[1],
-lbl = _ref7[2];
-return /*#**PURE***/React.createElement(“button”, {
-key: id,
-className: “mb “.concat(cls, “ “).concat(manMode === id ? “active” : “”),
-onClick: function onClick() {
-return setManMode(id);
-}
-}, lbl);
-})), /*#**PURE***/React.createElement(“textarea”, {
-value: manInput,
-onChange: function onChange(e) {
-return setManInput(e.target.value);
-},
-placeholder: “Sticker-Codes eingeben, z.B.:\nGER1 GER5 ARG20 SUI9 BRA14\nFWC3 CCL1 CCL5”
-}), /*#**PURE***/React.createElement(“button”, {
-className: “btn-go”,
-onClick: function onClick() {
-applyIds(parseIds(manInput.toUpperCase()), manMode);
-setManInput(””);
-}
-}, “Anwenden”)), tab === “album” && /*#**PURE***/React.createElement(React.Fragment, null, !selSec && /*#**PURE***/React.createElement(React.Fragment, null, /*#**PURE***/React.createElement(“div”, {
-className: “frow”
-}, [[“all”, “Alle”], [“started”, “Angefangen”], [“complete”, “Komplett”], [“empty”, “Leer”]].map(function (_ref8) {
-var _ref9 = _slicedToArray(_ref8, 2),
-id = _ref9[0],
-lbl = _ref9[1];
-return /*#**PURE***/React.createElement(“button”, {
-key: id,
-className: “flt “.concat(albFilter === id ? “active” : “”),
-onClick: function onClick() {
-return setAlbFilter(id);
-}
-}, lbl);
-})), /*#**PURE***/React.createElement(“div”, {
-className: “sec-grid”
-}, filtSecs.map(function (sec) {
-var _secStats3 = secStats(sec),
-tot = _secStats3.tot,
-own = _secStats3.own,
-mis = _secStats3.mis;
-var p = Math.round(own / tot * 100);
-return /*#**PURE***/React.createElement(“div”, {
-key: sec.code,
-className: “sec-card “.concat(sec.isSpecial ? “sp” : “”),
-onClick: function onClick() {
-return setSelSec(sec.code);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-className: “glbl”
-}, sec.group), /*#**PURE***/React.createElement(“h4”, null, sec.name), /*#**PURE***/React.createElement(“div”, {
-className: “mini-bar”
-}, /*#**PURE***/React.createElement(“div”, {
-className: “mini-f”,
-style: {
-width: “”.concat(p, “%”)
-}
-})), /*#**PURE***/React.createElement(“div”, {
-className: “sec-meta”
-}, /*#**PURE***/React.createElement(“span”, null, own, “/”, tot), /*#**PURE***/React.createElement(“span”, {
-style: {
-color: mis === 0 ? “var(–g)” : “var(–mu)”
-}
-}, mis === 0 ? “✓ Komplett” : “”.concat(mis, “ fehlen”))));
-}))), selSec && /*#**PURE***/React.createElement(SecDetail, {
-sec: allSections.find(function (s) {
-return s.code === selSec;
-}),
-state: state,
-setState: setState,
-secStats: secStats,
-stkStatus: stkStatus,
-onBack: function onBack() {
-return setSelSec(null);
-}
-})), tab === “overview” && /*#**PURE***/React.createElement(React.Fragment, null, /*#**PURE***/React.createElement(“button”, {
-className: “exp-btn”,
-onClick: function onClick() {
-return setExportModal(true);
-}
-}, “\uD83D\uDCCB Doppelte & Fehlende anzeigen”), exportModal && function () {
-var _buildExportData2 = buildExportData(state),
-doubles = _buildExportData2.doubles,
-missing = _buildExportData2.missing,
-doublesBySec = _buildExportData2.doublesBySec,
-missingBySec = _buildExportData2.missingBySec;
-return /*#**PURE***/React.createElement(“div”, {
-style: {
-position: “fixed”,
-inset: 0,
-background: “rgba(0,0,0,.75)”,
-zIndex: 300,
-display: “flex”,
-flexDirection: “column”
-},
-onClick: function onClick() {
-return setExportModal(false);
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-flex: 1,
-maxHeight: “5vh”
-}
-}), /*#**PURE***/React.createElement(“div”, {
-style: {
-background: “var(–s1)”,
-borderRadius: “16px 16px 0 0”,
-maxHeight: “95vh”,
-display: “flex”,
-flexDirection: “column”
-},
-onClick: function onClick(e) {
-return e.stopPropagation();
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-padding: “14px 16px 10px”,
-borderBottom: “1px solid var(–br)”,
-display: “flex”,
-alignItems: “center”,
-justifyContent: “space-between”,
-flexShrink: 0
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1.05rem”
-}
-}, “\u26BD Meine Sammlung”), /*#**PURE***/React.createElement(“button”, {
-onClick: function onClick() {
-return setExportModal(false);
-},
-style: {
-background: “none”,
-border: “1px solid var(–br)”,
-color: “var(–mu)”,
-borderRadius: 999,
-padding: “3px 11px”,
-cursor: “pointer”,
-fontFamily: “Nunito”,
-fontSize: “.78rem”
-}
-}, “\u2715”)), /*#**PURE***/React.createElement(“div”, {
-style: {
-display: “flex”,
-gap: 8,
-padding: “10px 16px”,
-borderBottom: “1px solid var(–br)”,
-flexShrink: 0
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-flex: 1,
-background: “rgba(34,197,94,.08)”,
-border: “1px solid rgba(34,197,94,.25)”,
-borderRadius: 10,
-padding: “7px 4px”,
-textAlign: “center”
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1.3rem”,
-color: “var(–g)”,
-lineHeight: 1
-}
-}, Object.keys(state.owned).length), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.62rem”,
-color: “var(–mu)”
-}
-}, “HABE ICH”)), /*#**PURE***/React.createElement(“div”, {
-style: {
-flex: 1,
-background: “rgba(245,158,11,.08)”,
-border: “1px solid rgba(245,158,11,.25)”,
-borderRadius: 10,
-padding: “7px 4px”,
-textAlign: “center”
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1.3rem”,
-color: “var(–y)”,
-lineHeight: 1
-}
-}, doubles.length), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.62rem”,
-color: “var(–mu)”
-}
-}, “DOPPELTE”)), /*#**PURE***/React.createElement(“div”, {
-style: {
-flex: 1,
-background: “rgba(239,68,68,.08)”,
-border: “1px solid rgba(239,68,68,.25)”,
-borderRadius: 10,
-padding: “7px 4px”,
-textAlign: “center”
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “1.3rem”,
-color: “var(–r)”,
-lineHeight: 1
-}
-}, missing.length), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.62rem”,
-color: “var(–mu)”
-}
-}, “FEHLEN”))), /*#**PURE***/React.createElement(“div”, {
-style: {
-overflowY: “auto”,
-padding: “12px 14px 32px”
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “.95rem”,
-color: “var(–y)”,
-marginBottom: 8
-}
-}, “\uD83D\uDD01 Doppelte (”, doubles.length, “)”), doublesBySec.length === 0 ? /*#**PURE***/React.createElement(“p”, {
-style: {
-color: “var(–mu)”,
-fontSize: “.78rem”,
-fontStyle: “italic”,
-marginBottom: 14
-}
-}, “Keine Doppelten.”) : doublesBySec.map(function (sec) {
-return /*#**PURE***/React.createElement(“div”, {
-key: sec.name,
-style: {
-marginBottom: 10
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.68rem”,
-color: “var(–mu)”,
-fontWeight: 700,
-marginBottom: 4,
-textTransform: “uppercase”,
-letterSpacing: “.04em”
-}
-}, sec.name), /*#**PURE***/React.createElement(“div”, {
-style: {
-display: “flex”,
-flexWrap: “wrap”,
-gap: 3
-}
-}, sec.ids.map(function (id) {
-return /*#**PURE***/React.createElement(“span”, {
-key: id,
-style: {
-padding: “2px 8px”,
-borderRadius: 999,
-fontSize: “.72rem”,
-fontWeight: 700,
-background: “rgba(245,158,11,.12)”,
-color: “var(–y)”,
-border: “1px solid rgba(245,158,11,.25)”
-}
-}, id, “ \xD7”, state.owned[id]);
-})));
-}), /*#**PURE***/React.createElement(“div”, {
-style: {
-height: 1,
-background: “var(–br)”,
-margin: “12px 0”
-}
-}), /*#**PURE***/React.createElement(“div”, {
-style: {
-fontFamily: “‘Baloo 2’,cursive”,
-fontSize: “.95rem”,
-color: “var(–r)”,
-marginBottom: 8
-}
-}, “\uD83C\uDFAF Fehlende (”, missing.length, “)”), missingBySec.length === 0 ? /*#**PURE***/React.createElement(“p”, {
-style: {
-color: “var(–g)”,
-fontWeight: “bold”,
-fontSize: “.84rem”
-}
-}, “\uD83C\uDF89 Album komplett!”) : missingBySec.map(function (sec) {
-return /*#**PURE***/React.createElement(“div”, {
-key: sec.name,
-style: {
-marginBottom: 10
-}
-}, /*#**PURE***/React.createElement(“div”, {
-style: {
-fontSize: “.68rem”,
-color: “var(–mu)”,
-fontWeight: 700,
-marginBottom: 4,
-textTransform: “uppercase”,
-letterSpacing: “.04em”
-}
-}, sec.name), /*#**PURE***/React.createElement(“div”, {
-style: {
-display: “flex”,
-flexWrap: “wrap”,
-gap: 3
-}
-}, sec.ids.map(function (id) {
-return /*#**PURE***/React.createElement(“span”, {
-key: id,
-style: {
-padding: “2px 8px”,
-borderRadius: 999,
-fontSize: “.72rem”,
-fontWeight: 700,
-background: “rgba(239,68,68,.1)”,
-color: “var(–r)”,
-border: “1px solid rgba(239,68,68,.22)”
-}
-}, id);
-})));
-}))));
-}()), /*#**PURE***/React.createElement(“button”, {
-className: “reset-btn”,
-onClick: function onClick() {
-if (!window.confirm(“Alles zurücksetzen?”)) return;
-setState(defaultState());
-setScanResult(null);
-showToast(“Zurückgesetzt.”);
-}
-}, “\u21BA Alles zur\xFCcksetzen”), toast && /*#**PURE***/React.createElement(“div”, {
-className: “toast”
-}, toast));
-}
-ReactDOM.createRoot(document.getElementById(‘root’)).render(React.createElement(App));
+const stkStatus=id=>state.owned[id]>1?“double”:state.owned[id]===1?“owned”:state.needed[id]?“needed”:“missing”;
 
+return (
+<div className="app">
+<style>{`@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap'); *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} :root{--g:#22c55e;--y:#f59e0b;--r:#ef4444;--b:#3b82f6;--p:#a855f7;--bg:#0f0e17;--s1:#1a1928;--s2:#232238;--br:#2e2d4a;--tx:#f0eeff;--mu:#8885a8;--rr:12px} body{background:var(--bg)} .app{min-height:100vh;background:var(--bg);color:var(--tx);font-family:'Nunito',sans-serif;max-width:700px;margin:0 auto;padding:14px 11px 80px} h1{font-family:'Baloo 2',cursive;font-size:1.85rem;font-weight:800;background:linear-gradient(135deg,#f59e0b,#ef4444,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center} .sub{color:var(--mu);font-size:.78rem;text-align:center;margin-bottom:11px} .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0} .sc{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:9px 4px;text-align:center} .sv{font-family:'Baloo 2',cursive;font-size:1.45rem;font-weight:800;line-height:1} .sl{font-size:.6rem;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-top:2px} .sc.g .sv{color:var(--g)}.sc.y .sv{color:var(--y)}.sc.r .sv{color:var(--r)}.sc.p .sv{color:var(--p)} .pb-w{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:10px 12px;margin-bottom:11px} .pb-l{display:flex;justify-content:space-between;font-size:.74rem;color:var(--mu);margin-bottom:5px} .pb{height:10px;border-radius:999px;background:var(--br);overflow:hidden} .pb-f{height:100%;border-radius:999px;background:linear-gradient(90deg,#22c55e,#84cc16);transition:width .5s} .tabs{display:flex;gap:4px;margin-bottom:11px;background:var(--s1);padding:4px;border-radius:var(--rr);border:1px solid var(--br)} .tab{flex:1;padding:6px 2px;border:none;border-radius:8px;background:transparent;color:var(--mu);font-family:'Nunito',sans-serif;font-size:.69rem;font-weight:700;cursor:pointer;transition:all .2s} .tab.active{background:var(--s2);color:var(--tx);box-shadow:0 2px 6px rgba(0,0,0,.3)} .row2{display:flex;gap:6px;margin-bottom:9px} .mbtn{flex:1;padding:8px;border-radius:9px;border:2px solid var(--br);background:transparent;color:var(--mu);font-family:'Nunito',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .2s} .mbtn.active.add{border-color:var(--g);color:var(--g);background:rgba(34,197,94,.08)} .mbtn.active.need{border-color:var(--b);color:var(--b);background:rgba(59,130,246,.08)} .upload{background:var(--s1);border:2px dashed var(--br);border-radius:var(--rr);padding:22px 14px;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:9px} .upload:hover{border-color:var(--y)} .upload-icon{font-size:2.1rem;margin-bottom:5px} .upload h3{font-family:'Baloo 2',cursive;font-size:.95rem;color:var(--y);margin-bottom:2px} .upload p{font-size:.73rem;color:var(--mu)} .spin{background:var(--s1);border-radius:var(--rr);padding:24px;text-align:center;border:1px solid var(--br);margin-bottom:9px} .spinner{width:36px;height:36px;border:3px solid var(--br);border-top-color:var(--y);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 8px} @keyframes spin{to{transform:rotate(360deg)}} .spin strong{font-family:'Baloo 2',cursive;font-size:.9rem;color:var(--y);display:block;margin-bottom:3px} .spin p{font-size:.76rem;color:var(--mu)} .res-box{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:12px;margin-bottom:9px} .res-hd{display:flex;gap:8px;align-items:center;margin-bottom:8px} .thumb{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--br);flex-shrink:0} .res-hd h4{font-family:'Baloo 2',cursive;font-size:.88rem;color:var(--g)} .res-hd p{font-size:.7rem;color:var(--mu);margin-top:1px} .scan-pills{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:9px;max-height:130px;overflow-y:auto} .sp{display:flex;align-items:center;gap:3px;padding:2px 7px 2px 8px;border-radius:999px;background:rgba(34,197,94,.1);color:var(--g);border:1px solid rgba(34,197,94,.2);font-size:.71rem;font-weight:700} .sp em{font-size:.62rem;color:var(--mu);font-style:normal} .sp button{background:none;border:none;color:var(--mu);cursor:pointer;font-size:.8rem;line-height:1} .sp button:hover{color:var(--r)} .res-acts{display:flex;gap:5px} .btn-ok{flex:1;padding:9px;border-radius:8px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:'Baloo 2',cursive;font-size:.82rem;font-weight:800;cursor:pointer} .btn-x{padding:9px 12px;border-radius:8px;border:1px solid var(--br);background:transparent;color:var(--mu);font-family:'Nunito',sans-serif;font-size:.78rem;cursor:pointer} .tip{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:8px 11px;font-size:.72rem;color:var(--mu)} .panel{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:12px;margin-bottom:11px} .panel h3{font-family:'Baloo 2',cursive;font-size:.88rem;color:var(--y);margin-bottom:8px} .m4{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px} .mb{padding:6px;border-radius:8px;border:2px solid var(--br);background:transparent;color:var(--mu);font-family:'Nunito',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s} .mb.active.add{border-color:var(--g);color:var(--g);background:rgba(34,197,94,.08)} .mb.active.remove{border-color:var(--r);color:var(--r);background:rgba(239,68,68,.08)} .mb.active.need{border-color:var(--b);color:var(--b);background:rgba(59,130,246,.08)} .mb.active.unneed{border-color:var(--mu);color:var(--mu);background:rgba(136,133,168,.08)} textarea{width:100%;min-height:64px;background:var(--bg);border:1px solid var(--br);border-radius:8px;color:var(--tx);font-family:'Nunito',sans-serif;font-size:.84rem;padding:8px;resize:vertical;outline:none;transition:border-color .2s} textarea:focus{border-color:var(--y)} textarea::placeholder{color:var(--mu)} .btn-go{margin-top:6px;width:100%;padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;cursor:pointer} .frow{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px} .flt{padding:3px 10px;border-radius:999px;border:1.5px solid var(--br);background:transparent;color:var(--mu);font-size:.68rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif} .flt.active{border-color:var(--y);color:var(--y)} .sec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px} .sec-card{background:var(--s1);border:1px solid var(--br);border-radius:var(--rr);padding:8px 10px;cursor:pointer;transition:border-color .2s} .sec-card:hover{border-color:var(--y)} .sec-card.sp{border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.06)} .sec-card h4{font-size:.8rem;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .mini-bar{height:4px;border-radius:999px;background:var(--br);overflow:hidden;margin-bottom:3px} .mini-f{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--g),#84cc16)} .sec-meta{display:flex;justify-content:space-between;font-size:.62rem;color:var(--mu)} .glbl{font-size:.58rem;color:var(--mu);margin-bottom:2px} .back{background:none;border:1px solid var(--br);color:var(--mu);padding:4px 11px;border-radius:999px;font-family:'Nunito',sans-serif;font-size:.74rem;cursor:pointer;margin-bottom:9px} .stk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px} .stk{border-radius:7px;padding:5px 3px;text-align:center;cursor:pointer;transition:transform .1s;user-select:none;position:relative} .stk:active{transform:scale(.91)} .stk-id{font-size:.58rem;font-weight:800} .stk-nm{font-size:.53rem;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .stk.foil .stk-id::after{content:" ✨";font-size:.48rem} .stk.owned{background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);color:var(--g)} .stk.double{background:rgba(245,158,11,.15);border:1.5px solid rgba(245,158,11,.35);color:var(--y)} .stk.needed{background:rgba(59,130,246,.15);border:1.5px solid rgba(59,130,246,.3);color:var(--b)} .stk.missing{background:var(--s2);border:1.5px solid var(--br);color:var(--mu)} .dbadge{position:absolute;top:-4px;right:-4px;background:var(--y);color:#000;font-size:.44rem;font-weight:800;border-radius:999px;min-width:12px;height:12px;display:flex;align-items:center;justify-content:center;padding:0 2px} .legend{display:flex;gap:7px;flex-wrap:wrap;font-size:.65rem;color:var(--mu);margin-bottom:8px} .li{display:flex;align-items:center;gap:3px} .ld{width:10px;height:10px;border-radius:3px;flex-shrink:0} .ov-sec{margin-bottom:15px} .ov-sec h3{font-family:'Baloo 2',cursive;font-size:.88rem;margin-bottom:5px} .pills{display:flex;flex-wrap:wrap;gap:3px} .pill{padding:2px 7px;border-radius:999px;font-size:.7rem;font-weight:700} .pill.d{background:rgba(245,158,11,.12);color:var(--y);border:1px solid rgba(245,158,11,.22)} .pill.n{background:rgba(59,130,246,.12);color:var(--b);border:1px solid rgba(59,130,246,.22)} .empty{color:var(--mu);font-size:.76rem;font-style:italic} .exp-btn{width:100%;padding:11px;border-radius:var(--rr);border:none;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:800;cursor:pointer;margin-bottom:13px} .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--s2);border:1px solid var(--br);color:var(--tx);padding:7px 15px;border-radius:12px;font-size:.75rem;font-weight:700;z-index:999;box-shadow:0 6px 18px rgba(0,0,0,.5);animation:fu .2s ease;max-width:90vw;word-break:break-all;cursor:pointer;text-align:center} @keyframes fu{from{opacity:0;transform:translateX(-50%) translateY(7px)}} .reset-btn{display:block;margin:13px auto 0;background:none;border:1px solid var(--br);color:var(--mu);font-size:.68rem;padding:4px 12px;border-radius:999px;cursor:pointer;font-family:'Nunito',sans-serif} .reset-btn:hover{color:var(--r);border-color:var(--r)} input[type=file]{display:none}`}</style>
+
+```
+  <h1>⚽ Panini WM 2026</h1>
+  <div className="sub">FIFA World Cup 2026 · {TOTAL} Sticker · 48 Teams + Spezialseiten</div>
+
+  {/* KPI MODAL */}
+  {kpiModal && (() => {
+    const configs = {
+      owned: { title:"Habe ich", color:"var(--g)", ids: ALL_IDS.filter(id=>state.owned[id]>=1) },
+      doubles: { title:"Doppelte", color:"var(--y)", ids: ALL_IDS.filter(id=>state.owned[id]>1) },
+      missing: { title:"Fehlende", color:"var(--r)", ids: ALL_IDS.filter(id=>!state.owned[id]) },
+      needed: { title:"Gesuchte", color:"var(--p)", ids: ALL_IDS.filter(id=>state.needed[id]&&!state.owned[id]) },
+    };
+    const cfg = configs[kpiModal];
+    // Group by section
+    const grouped = {};
+    cfg.ids.forEach(id => {
+      const s = CHECKLIST[id].section;
+      const sn = CHECKLIST[id].sectionName;
+      if (!grouped[s]) grouped[s] = { name: sn, ids: [] };
+      grouped[s].ids.push(id);
+    });
+    const sections = Object.values(grouped);
+    return (
+      <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.7)",zIndex:300,display:"flex",flexDirection:"column"}} onClick={()=>setKpiModal(null)}>
+        <div style={{flex:1,maxHeight:"10vh"}}/>
+        <div style={{background:"var(--s1)",borderRadius:"16px 16px 0 0",maxHeight:"90vh",display:"flex",flexDirection:"column"}} onClick={e=>e.stopPropagation()}>
+          <div style={{padding:"14px 16px 10px",borderBottom:"1px solid var(--br)",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+            <div>
+              <span style={{fontFamily:"'Baloo 2',cursive",fontSize:"1.1rem",color:cfg.color}}>{cfg.title}</span>
+              <span style={{fontSize:".78rem",color:"var(--mu)",marginLeft:8}}>{cfg.ids.length} Sticker</span>
+            </div>
+            <button onClick={()=>setKpiModal(null)} style={{background:"none",border:"1px solid var(--br)",color:"var(--mu)",borderRadius:999,padding:"3px 11px",cursor:"pointer",fontFamily:"Nunito",fontSize:".78rem"}}>✕</button>
+          </div>
+          <div style={{overflowY:"auto",padding:"12px 14px 32px"}}>
+            {sections.length === 0 && <p style={{color:"var(--mu)",fontSize:".82rem",fontStyle:"italic",textAlign:"center",padding:"20px 0"}}>Keine Sticker.</p>}
+            {sections.map(sec => (
+              <div key={sec.name} style={{marginBottom:12}}>
+                <div style={{fontSize:".7rem",color:"var(--mu)",fontWeight:700,marginBottom:5,textTransform:"uppercase",letterSpacing:".04em"}}>{sec.name}</div>
+                <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
+                  {sec.ids.map(id => (
+                    <span key={id} style={{padding:"2px 9px",borderRadius:999,fontSize:".73rem",fontWeight:700,
+                      background: kpiModal==="doubles" ? "rgba(245,158,11,.12)" : kpiModal==="missing" ? "rgba(239,68,68,.1)" : kpiModal==="needed" ? "rgba(168,85,247,.12)" : "rgba(34,197,94,.12)",
+                      color: kpiModal==="doubles" ? "var(--y)" : kpiModal==="missing" ? "var(--r)" : kpiModal==="needed" ? "var(--p)" : "var(--g)",
+                      border: `1px solid ${kpiModal==="doubles" ? "rgba(245,158,11,.25)" : kpiModal==="missing" ? "rgba(239,68,68,.25)" : kpiModal==="needed" ? "rgba(168,85,247,.25)" : "rgba(34,197,94,.25)"}`
+                    }}>
+                      {id}{kpiModal==="doubles" ? ` ×${state.owned[id]}` : ""}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  })()}
+
+  <div className="stats">
+    <div className="sc g" style={{cursor:"pointer"}} onClick={()=>setKpiModal("owned")}><div className="sv">{owned}</div><div className="sl">Habe ich</div></div>
+    <div className="sc y" style={{cursor:"pointer"}} onClick={()=>setKpiModal("doubles")}><div className="sv">{doubles}</div><div className="sl">Doppelt</div></div>
+    <div className="sc r" style={{cursor:"pointer"}} onClick={()=>setKpiModal("missing")}><div className="sv">{missing}</div><div className="sl">Fehlen</div></div>
+    <div className="sc p" style={{cursor:"pointer"}} onClick={()=>setKpiModal("needed")}><div className="sv">{needed}</div><div className="sl">Gesucht</div></div>
+  </div>
+  <div className="pb-w">
+    <div className="pb-l"><span>Fortschritt</span><span>{owned} / {TOTAL} ({pct}%)</span></div>
+    <div className="pb"><div className="pb-f" style={{width:`${pct}%`}}/></div>
+  </div>
+
+  <div className="tabs">
+    {[["manual","✏️ Eingabe"],["album","📚 Album"],["overview","📋 Liste"]].map(([id,lbl])=>(
+      <button key={id} className={`tab ${tab===id?"active":""}`} onClick={()=>{setTab(id);setSelSec(null);}}>{lbl}</button>
+    ))}
+  </div>
+
+
+  {/* MANUAL */}
+  {tab==="manual" && <div className="panel">
+    <h3>Codes manuell eingeben</h3>
+    <div className="m4">
+      {[["add","add","✅ Hinzufügen"],["remove","remove","🗑 Entfernen"],["need","need","🎯 Fehlend"],["unneed","unneed","✖ Fehlend aufheben"]].map(([id,cls,lbl])=>(
+        <button key={id} className={`mb ${cls} ${manMode===id?"active":""}`} onClick={()=>setManMode(id)}>{lbl}</button>
+      ))}
+    </div>
+    <textarea value={manInput} onChange={e=>setManInput(e.target.value)}
+      placeholder={"Sticker-Codes eingeben, z.B.:\nGER1 GER5 ARG20 SUI9 BRA14\nFWC3 CCL1 CCL5"}/>
+    <button className="btn-go" onClick={()=>{applyIds(parseIds(manInput.toUpperCase()),manMode);setManInput("");}}>Anwenden</button>
+  </div>}
+
+  {/* ALBUM */}
+  {tab==="album" && <>
+    {!selSec && <>
+      <div className="frow">
+        {[["all","Alle"],["started","Angefangen"],["complete","Komplett"],["empty","Leer"]].map(([id,lbl])=>(
+          <button key={id} className={`flt ${albFilter===id?"active":""}`} onClick={()=>setAlbFilter(id)}>{lbl}</button>
+        ))}
+      </div>
+      <div className="sec-grid">
+        {filtSecs.map(sec=>{
+          const{tot,own,mis}=secStats(sec);
+          const p=Math.round((own/tot)*100);
+          return(
+            <div key={sec.code} className={`sec-card ${sec.isSpecial?"sp":""}`} onClick={()=>setSelSec(sec.code)}>
+              <div className="glbl">{sec.group}</div>
+              <h4>{sec.name}</h4>
+              <div className="mini-bar"><div className="mini-f" style={{width:`${p}%`}}/></div>
+              <div className="sec-meta"><span>{own}/{tot}</span><span style={{color:mis===0?"var(--g)":"var(--mu)"}}>{mis===0?"✓ Komplett":`${mis} fehlen`}</span></div>
+            </div>
+          );
+        })}
+      </div>
+    </>}
+    {selSec && <SecDetail
+      sec={allSections.find(s=>s.code===selSec)}
+      state={state}
+      setState={setState}
+      secStats={secStats}
+      stkStatus={stkStatus}
+      onBack={()=>setSelSec(null)}
+    />}
+  </>}
+
+  {/* OVERVIEW */}
+  {tab==="overview" && <>
+    <button className="exp-btn" onClick={()=>setExportModal(true)}>📋 Doppelte &amp; Fehlende</button>
+    <button className="exp-btn" style={{background:"linear-gradient(135deg,#16a34a,#22c55e)",marginTop:6}} onClick={()=>printList(state)}>🖨️ Liste drucken</button>
+
+    {exportModal && (() => {
+      const { doubles, missing, doublesBySec, missingBySec } = buildExportData(state);
+      return (
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.75)",zIndex:300,display:"flex",flexDirection:"column"}} onClick={()=>setExportModal(false)}>
+          <div style={{flex:1,maxHeight:"5vh"}}/>
+          <div style={{background:"var(--s1)",borderRadius:"16px 16px 0 0",maxHeight:"95vh",display:"flex",flexDirection:"column"}} onClick={e=>e.stopPropagation()}>
+            <div style={{padding:"14px 16px 10px",borderBottom:"1px solid var(--br)",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+              <div style={{fontFamily:"'Baloo 2',cursive",fontSize:"1.05rem"}}>⚽ Meine Sammlung</div>
+              <button onClick={()=>setExportModal(false)} style={{background:"none",border:"1px solid var(--br)",color:"var(--mu)",borderRadius:999,padding:"3px 11px",cursor:"pointer",fontFamily:"Nunito",fontSize:".78rem"}}>✕</button>
+            </div>
+            {/* Stats row */}
+            <div style={{display:"flex",gap:8,padding:"10px 16px",borderBottom:"1px solid var(--br)",flexShrink:0}}>
+              <div style={{flex:1,background:"rgba(34,197,94,.08)",border:"1px solid rgba(34,197,94,.25)",borderRadius:10,padding:"7px 4px",textAlign:"center"}}>
+                <div style={{fontFamily:"'Baloo 2',cursive",fontSize:"1.3rem",color:"var(--g)",lineHeight:1}}>{Object.keys(state.owned).length}</div>
+                <div style={{fontSize:".62rem",color:"var(--mu)"}}>HABE ICH</div>
+              </div>
+              <div style={{flex:1,background:"rgba(245,158,11,.08)",border:"1px solid rgba(245,158,11,.25)",borderRadius:10,padding:"7px 4px",textAlign:"center"}}>
+                <div style={{fontFamily:"'Baloo 2',cursive",fontSize:"1.3rem",color:"var(--y)",lineHeight:1}}>{doubles.length}</div>
+                <div style={{fontSize:".62rem",color:"var(--mu)"}}>DOPPELTE</div>
+              </div>
+              <div style={{flex:1,background:"rgba(239,68,68,.08)",border:"1px solid rgba(239,68,68,.25)",borderRadius:10,padding:"7px 4px",textAlign:"center"}}>
+                <div style={{fontFamily:"'Baloo 2',cursive",fontSize:"1.3rem",color:"var(--r)",lineHeight:1}}>{missing.length}</div>
+                <div style={{fontSize:".62rem",color:"var(--mu)"}}>FEHLEN</div>
+              </div>
+            </div>
+            <div style={{overflowY:"auto",padding:"12px 14px 32px"}}>
+              {/* Doubles */}
+              <div style={{fontFamily:"'Baloo 2',cursive",fontSize:".95rem",color:"var(--y)",marginBottom:8}}>🔁 Doppelte ({doubles.length})</div>
+              {doublesBySec.length === 0
+                ? <p style={{color:"var(--mu)",fontSize:".78rem",fontStyle:"italic",marginBottom:14}}>Keine Doppelten.</p>
+                : doublesBySec.map(sec => (
+                  <div key={sec.name} style={{marginBottom:10}}>
+                    <div style={{fontSize:".68rem",color:"var(--mu)",fontWeight:700,marginBottom:4,textTransform:"uppercase",letterSpacing:".04em"}}>{sec.name}</div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:3}}>
+                      {sec.ids.map(id => (
+                        <span key={id} style={{padding:"2px 8px",borderRadius:999,fontSize:".72rem",fontWeight:700,background:"rgba(245,158,11,.12)",color:"var(--y)",border:"1px solid rgba(245,158,11,.25)"}}>
+                          {id} ×{state.owned[id]}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              }
+              <div style={{height:1,background:"var(--br)",margin:"12px 0"}}/>
+              {/* Missing */}
+              <div style={{fontFamily:"'Baloo 2',cursive",fontSize:".95rem",color:"var(--r)",marginBottom:8}}>🎯 Fehlende ({missing.length})</div>
+              {missingBySec.length === 0
+                ? <p style={{color:"var(--g)",fontWeight:"bold",fontSize:".84rem"}}>🎉 Album komplett!</p>
+                : missingBySec.map(sec => (
+                  <div key={sec.name} style={{marginBottom:10}}>
+                    <div style={{fontSize:".68rem",color:"var(--mu)",fontWeight:700,marginBottom:4,textTransform:"uppercase",letterSpacing:".04em"}}>{sec.name}</div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:3}}>
+                      {sec.ids.map(id => (
+                        <span key={id} style={{padding:"2px 8px",borderRadius:999,fontSize:".72rem",fontWeight:700,background:"rgba(239,68,68,.1)",color:"var(--r)",border:"1px solid rgba(239,68,68,.22)"}}>
+                          {id}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      );
+    })()}
+  </>}
+
+  <button className="reset-btn" onClick={()=>{if(!window.confirm("Alles zurücksetzen?"))return;setState(defaultState());setScanResult(null);showToast("Zurückgesetzt.");}}>↺ Alles zurücksetzen</button>
+  {toast && <div className="toast">{toast}</div>}
+</div>
+```
+
+);
+}
+
+ReactDOM.createRoot(document.getElementById(‘root’)).render(React.createElement(App));
 </script>
+
 </body>
 </html>
