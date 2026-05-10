@@ -96,19 +96,19 @@ textarea::placeholder{color:var(--mu)}
   <h1>Panini WM 2026</h1>
   <div class="sub">FIFA World Cup 2026</div>
   <div class="stats">
-    <div class="sc g" onclick="showKpi('owned')"><div class="sv" id="st-owned">0</div><div class="sl">Habe ich</div></div>
-    <div class="sc y" onclick="showKpi('doubles')"><div class="sv" id="st-doubles">0</div><div class="sl">Doppelt</div></div>
-    <div class="sc r" onclick="showKpi('missing')"><div class="sv" id="st-missing">0</div><div class="sl">Fehlen</div></div>
-    <div class="sc p" onclick="showKpi('needed')"><div class="sv" id="st-needed">0</div><div class="sl">Gesucht</div></div>
+    <div class="sc g" id="kpi-owned"><div class="sv" id="st-owned">0</div><div class="sl">Habe ich</div></div>
+    <div class="sc y" id="kpi-doubles"><div class="sv" id="st-doubles">0</div><div class="sl">Doppelt</div></div>
+    <div class="sc r" id="kpi-missing"><div class="sv" id="st-missing">0</div><div class="sl">Fehlen</div></div>
+    <div class="sc p" id="kpi-needed"><div class="sv" id="st-needed">0</div><div class="sl">Gesucht</div></div>
   </div>
   <div class="pb-w">
     <div class="pb-l"><span>Fortschritt</span><span id="pb-txt">0 / 0 (0%)</span></div>
     <div class="pb"><div class="pb-f" id="pb-fill" style="width:0%"></div></div>
   </div>
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('manual',this)">Eingabe</button>
-    <button class="tab" onclick="switchTab('album',this)">Album</button>
-    <button class="tab" onclick="switchTab('overview',this)">Liste</button>
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="manual">Eingabe</button>
+    <button class="tab" data-tab="album">Album</button>
+    <button class="tab" data-tab="overview">Liste</button>
   </div>
 
   <!-- MANUAL -->
@@ -116,14 +116,14 @@ textarea::placeholder{color:var(--mu)}
   <div id="tab-manual">
     <div class="panel">
       <h3>Codes eingeben</h3>
-      <div class="m4">
-        <button class="mb active-add" onclick="setMode('add',this)">+ Hinzufuegen</button>
-        <button class="mb" onclick="setMode('remove',this)">- Entfernen</button>
-        <button class="mb" onclick="setMode('need',this)">o Fehlend markieren</button>
-        <button class="mb" onclick="setMode('unneed',this)">x Fehlend aufheben</button>
+      <div class="m4" id="mode-btns">
+        <button class="mb active-add" data-mode="add">+ Hinzufuegen</button>
+        <button class="mb" data-mode="remove">- Entfernen</button>
+        <button class="mb" data-mode="need">o Fehlend markieren</button>
+        <button class="mb" data-mode="unneed">x Fehlend aufheben</button>
       </div>
       <textarea id="manual-input" placeholder="Codes eingeben, z.B.:&#10;GER1 GER5 ARG17 SUI9 BRA14&#10;FWC3 CCL1"></textarea>
-      <button class="btn-go" onclick="applyManual()">Anwenden</button>
+      <button class="btn-go" id="btn-apply">Anwenden</button>
     </div>
   </div>
 
@@ -131,16 +131,16 @@ textarea::placeholder{color:var(--mu)}
 
   <div id="tab-album" class="hidden">
     <div id="album-list">
-      <div class="frow">
-        <button class="flt active" onclick="setAlbFilter('all',this)">Alle</button>
-        <button class="flt" onclick="setAlbFilter('started',this)">Angefangen</button>
-        <button class="flt" onclick="setAlbFilter('complete',this)">Komplett</button>
-        <button class="flt" onclick="setAlbFilter('empty',this)">Leer</button>
+      <div class="frow" id="alb-filters">
+        <button class="flt active" data-filter="all">Alle</button>
+        <button class="flt" data-filter="started">Angefangen</button>
+        <button class="flt" data-filter="complete">Komplett</button>
+        <button class="flt" data-filter="empty">Leer</button>
       </div>
       <div class="sec-grid" id="sec-grid"></div>
     </div>
     <div id="album-detail" class="hidden">
-      <button class="back" onclick="closeDetail()">Zurueck</button>
+      <button class="back" id="btn-back">Zurueck</button>
       <div id="detail-header"></div>
       <div class="legend">
         <div class="li"><div class="ld" style="background:rgba(34,197,94,.3);border:1.5px solid #22c55e"></div>Vorhanden</div>
@@ -155,8 +155,8 @@ textarea::placeholder{color:var(--mu)}
   <!-- OVERVIEW -->
 
   <div id="tab-overview" class="hidden">
-    <button class="exp-btn" onclick="showExportModal()">Doppelte &amp; Fehlende anzeigen</button>
-    <button class="print-btn" onclick="doPrint()">Drucken / PDF</button>
+    <button class="exp-btn" id="btn-export">Doppelte &amp; Fehlende anzeigen</button>
+    <button class="print-btn" id="btn-print">Drucken / PDF</button>
     <div class="ov-sec">
       <h3 style="color:var(--y)">Doppelte</h3>
       <div class="pills" id="ov-doubles"></div>
@@ -170,11 +170,11 @@ textarea::placeholder{color:var(--mu)}
 
 <!-- KPI MODAL -->
 
-<div id="kpi-modal" class="modal-bg hidden" onclick="closeKpi()">
+<div id="kpi-modal" class="modal-bg hidden" id="btn-close-kpi">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-head">
       <h4 id="kpi-title"></h4>
-      <button class="modal-close" onclick="closeKpi()">x</button>
+      <button class="modal-close" id="btn-close-kpi">x</button>
     </div>
     <div class="modal-body" id="kpi-body"></div>
   </div>
@@ -182,11 +182,11 @@ textarea::placeholder{color:var(--mu)}
 
 <!-- EXPORT MODAL -->
 
-<div id="exp-modal" class="modal-bg hidden" onclick="closeExpModal()">
+<div id="exp-modal" class="modal-bg hidden" id="btn-close-exp">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-head">
       <h4>Meine Sammlung</h4>
-      <button class="modal-close" onclick="closeExpModal()">x</button>
+      <button class="modal-close" id="btn-close-exp">x</button>
     </div>
     <div class="modal-body" id="exp-body"></div>
   </div>
@@ -194,19 +194,19 @@ textarea::placeholder{color:var(--mu)}
 
 <!-- STICKER POPUP -->
 
-<div id="stk-popup" class="popup-bg hidden" onclick="closePopup()">
+<div id="stk-popup" class="popup-bg hidden" id="btn-cancel-popup">
   <div class="popup" onclick="event.stopPropagation()">
     <h4 id="popup-title"></h4>
     <p id="popup-sub"></p>
     <div class="popup-btns">
-      <button class="pop-add" id="popup-add" onclick="popupAction('add')">+ Hinzufuegen</button>
-      <button class="pop-rem" id="popup-rem" onclick="popupAction('remove')">- Entfernen</button>
+      <button class="pop-add" id="popup-add" id="popup-add-btn">+ Hinzufuegen</button>
+      <button class="pop-rem" id="popup-rem" id="popup-rem-btn">- Entfernen</button>
     </div>
-    <button class="pop-cancel" onclick="closePopup()">Abbrechen</button>
+    <button class="pop-cancel" id="btn-cancel-popup">Abbrechen</button>
   </div>
 </div>
 
-<button class="reset-btn" onclick="resetAll()">Reset alles</button>
+<button class="reset-btn" id="btn-reset">Reset alles</button>
 
 <div id="toast" class="toast hidden"></div>
 
@@ -627,7 +627,64 @@ showToast(‘Zurueckgesetzt.’);
 
 // Init
 render();
-</script>
 
+// ── INIT EVENT LISTENERS ────────────────────────────────────────────────
+document.getElementById(‘tabs’).addEventListener(‘click’, function(e) {
+var btn = e.target.closest(’[data-tab]’);
+if(!btn) return;
+var name = btn.getAttribute(‘data-tab’);
+document.querySelectorAll(’.tab’).forEach(function(b){b.classList.remove(‘active’);});
+btn.classList.add(‘active’);
+[‘manual’,‘album’,‘overview’].forEach(function(t){
+document.getElementById(‘tab-’+t).classList.add(‘hidden’);
+});
+document.getElementById(‘tab-’+name).classList.remove(‘hidden’);
+if(name===‘album’){ closeDetail(); renderSecGrid(); }
+});
+
+document.getElementById(‘mode-btns’).addEventListener(‘click’, function(e) {
+var btn = e.target.closest(’[data-mode]’);
+if(!btn) return;
+currentMode = btn.getAttribute(‘data-mode’);
+document.querySelectorAll(’#mode-btns .mb’).forEach(function(b){ b.className=‘mb’; });
+btn.className = ‘mb active-’+currentMode;
+});
+
+document.getElementById(‘alb-filters’).addEventListener(‘click’, function(e) {
+var btn = e.target.closest(’[data-filter]’);
+if(!btn) return;
+albFilter = btn.getAttribute(‘data-filter’);
+document.querySelectorAll(’#alb-filters .flt’).forEach(function(b){b.classList.remove(‘active’);});
+btn.classList.add(‘active’);
+renderSecGrid();
+});
+
+document.getElementById(‘btn-apply’).addEventListener(‘click’, applyManual);
+document.getElementById(‘btn-back’).addEventListener(‘click’, closeDetail);
+document.getElementById(‘btn-export’).addEventListener(‘click’, showExportModal);
+document.getElementById(‘btn-print’).addEventListener(‘click’, doPrint);
+document.getElementById(‘btn-reset’).addEventListener(‘click’, resetAll);
+document.getElementById(‘btn-close-kpi’).addEventListener(‘click’, closeKpi);
+document.getElementById(‘btn-close-exp’).addEventListener(‘click’, closeExpModal);
+document.getElementById(‘btn-cancel-popup’).addEventListener(‘click’, closePopup);
+document.getElementById(‘popup-add-btn’).addEventListener(‘click’, function(){ popupAction(‘add’); });
+document.getElementById(‘popup-rem-btn’).addEventListener(‘click’, function(){ popupAction(‘remove’); });
+
+document.getElementById(‘kpi-owned’).addEventListener(‘click’, function(){ showKpi(‘owned’); });
+document.getElementById(‘kpi-doubles’).addEventListener(‘click’, function(){ showKpi(‘doubles’); });
+document.getElementById(‘kpi-missing’).addEventListener(‘click’, function(){ showKpi(‘missing’); });
+document.getElementById(‘kpi-needed’).addEventListener(‘click’, function(){ showKpi(‘needed’); });
+
+document.getElementById(‘kpi-modal’).addEventListener(‘click’, function(e){
+if(e.target===this) closeKpi();
+});
+document.getElementById(‘exp-modal’).addEventListener(‘click’, function(e){
+if(e.target===this) closeExpModal();
+});
+document.getElementById(‘stk-popup’).addEventListener(‘click’, function(e){
+if(e.target===this) closePopup();
+});
+
+</script>
 </body>
 </html>
